@@ -2,19 +2,23 @@
      include '../modelos/conector.php'; 
      $ids = $_POST['ids'];
      $nombre = $_POST['nombre'];
-     $lugar = $_POST['lugar'];
-     $fecha = $_POST['fecha'];
+     $tiposac = $_POST['sacerdote'];
      
   
   
     
+            
   
-  
-    if (!empty($fecha)){
+    if ($tiposac!=0){
 
-        $sql = "UPDATE datospersona SET nombre = '$nombre', lugarNacimiento ='$lugar', fechaNacimiento='$fecha' where idDatosPersona = $ids";
+        $sql = "UPDATE datospersona SET nombre = '$nombre' where idDatosPersona = $ids";
 
         if (mysqli_query($conn, $sql)) {
+
+            $sqltipo = "UPDATE persona SET tipoSacerdote = '$tiposac' where DatosPersona_idDatosPersona = $ids";
+            mysqli_query($conn, $sqltipo);
+
+
 
             echo "<script> 
             alert('Sacerdote se modificó con exito.'); 
@@ -33,7 +37,7 @@
 
     }else{
 
-        $sql = "UPDATE datospersona SET nombre = '$nombre', lugarNacimiento ='$lugar' where idDatosPersona = $ids";
+        $sql = "UPDATE datospersona SET nombre = '$nombre' where idDatosPersona = $ids";
 
         if (mysqli_query($conn, $sql)) {
 

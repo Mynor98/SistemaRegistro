@@ -2,17 +2,17 @@
      include '../modelos/conector.php'; 
      
      $nombre = $_POST['nombre'];
-     $lugar = $_POST['lugar'];
-     $fecha  = $_POST['fecha'];
+     $tiposac = $_POST['sacerdote'];
+
      
         
     
     if(!empty($nombre)){
 
-       
+       if(!empty($tiposac)){ 
 
-        $sqlcon = "INSERT INTO datospersona (nombre, lugarNacimiento,fechaNacimiento)
-                        VALUES ('$nombre','$lugar','$fecha')";
+        $sqlcon = "INSERT INTO datospersona (nombre)
+                        VALUES ('$nombre')";
         
         if (mysqli_query($conn, $sqlcon)) {
             
@@ -22,8 +22,8 @@
                 $result = mysqli_fetch_array($ejecutar);
                 $idult = $result['idc'];
 
-                    $insper ="INSERT INTO persona (TipoPersona_idTipoPersona, DatosPersona_idDatosPersona)
-                                            VALUES (4,$idult)";
+                    $insper ="INSERT INTO persona (TipoPersona_idTipoPersona, DatosPersona_idDatosPersona,tipoSacerdote)
+                                            VALUES (4,$idult,'$tiposac')";
                     mysqli_query($conn, $insper);
              
                     echo "<script> 
@@ -42,7 +42,14 @@
             </script>"; 
             
         }   
-
+        
+        
+    }else{
+        echo "<script> 
+        alert('Error al insertar, especifique el tipo del sacerdote.'); 
+        window.location.href='../vistas/principalsacerdote.php'; 
+        </script>"; 
+    }
 
 
     }else {

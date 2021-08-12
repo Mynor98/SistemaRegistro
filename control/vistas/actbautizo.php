@@ -112,6 +112,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes
@@ -159,7 +165,7 @@
 
               <h3>Registro de bautizo</h3>
              <hr>
-             <br>
+             
           <form class="row" action="../controladores/insertarbautizo.php" method="POST">
               
               <div class="form-group col-md-6">
@@ -431,7 +437,7 @@
                 <input type="text" class="form-control" id="nlibro" placeholder="Nombre" name="nombre">
               
                 <label for="inputAddress">Seleccionar genero:</label>
-                    	<select class="custom-select custom-select-lg mb-3" style="width: 100%" name="genero">
+                    	<select class="form-select" aria-label="Default select example" name="genero">
                         <option value ="0" selected>Genero</option>
                         <option value ="Masculino">Masculino</option>
                         <option value = "Femenino">Femenino</option>
@@ -468,16 +474,15 @@
 
              
 
-                <label for="inputAddress">Nombre del Sacerdote:</label>
+              <label for="inputAddress">Nombre del Sacerdote:</label>
                 <input type="text" class="form-control" id="" placeholder="Nombre" name="nombre"> 
-              
-              
-                <label for="inputAddress2">Lugar de nacimiento:</label>
-                <input type="text" class="form-control" id="" placeholder="Lugar" name="lugar">
-            
-             
-                <label for="inputAddress2">Fecha de nacimiento:</label>
-                <input type="date" class="form-control" id="" placeholder="" name="fecha">
+                <br>
+                <select class="form-select" aria-label="Default select example" name="sacerdote">
+                  <option selected value="0">Tipo de Sacerdote</option>
+                  <option value="Parroco">Párroco</option>
+                  <option value="Parroco Adjunto">Párroco Adjunto</option>
+                  <option value="Otro">Otro</option>
+                </select>
 
                 
     

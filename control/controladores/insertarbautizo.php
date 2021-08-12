@@ -109,8 +109,13 @@
 
 
         }else if($padrinou ==0 && $padrinod !=0){
-
-            if(!empty($fecha)){
+          
+           
+            echo "<script> 
+            alert('Error, Acta no ingresada. Cuando solo sea un padrino, colocarlo en la primera celda.'); 
+            window.location.href='../vistas/principalbautizo.php'; 
+            </script>";
+           /* if(!empty($fecha)){
                 
                 $sqlcon = "INSERT INTO registro(noLibro, noFolio,fechaSacramento, alMargen, supletoria, Sacramentos_idSacramentos, Persona_idPadrinodos, Sacramentados_idDatosPersona,Persona_idPersonaSacerdote)
                 VALUES ($libro,$folio,'$fecha', '$notas', 0,1,$padrinod, $sacramentado, $idsas)";
@@ -142,7 +147,7 @@
                     }
 
 
-
+*/
 
 
         }else{

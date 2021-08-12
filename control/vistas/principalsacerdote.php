@@ -123,6 +123,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes
@@ -185,13 +191,13 @@
            <hr>  
            <br>
      
-         <table id="sacerdotes" class="table table-striped " style="width:100%">
+         <table id="formato" class="table table-striped " style="width:100%">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Nombre</th>
-      <th scope="col">Lugar de nacimiento</th>
-      <th scope="col">Fecha de nacimiento</th>
+      <th scope="col">Tipo</th>
+      
       <th scope="col">Acciones</th>
     </tr>
   </thead>
@@ -200,9 +206,9 @@
   
   
      //codigo llenar tabla
-      $consu = "SELECT dper.idDatosPersona, dper.nombre, dper.lugarNacimiento, dper.fechaNacimiento FROM persona as per
+      $consu = "SELECT dper.idDatosPersona,per.idPersona,per.estado, dper.nombre, per.tipoSacerdote FROM persona as per
       INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-      WHERE per.TipoPersona_idTipoPersona = 4 ";
+      WHERE per.TipoPersona_idTipoPersona = 4 and per.estado = 1";
 
       $resul = mysqli_query($conn,$consu);
 
@@ -214,19 +220,25 @@
               <tr>
                 <th scope="row"><?php echo $iteracion ?></th>
                 <td><?php echo $row['nombre'] ?></td>
-                <td><?php echo $row['lugarNacimiento'] ?></td>
-                <td><?php echo $row['fechaNacimiento'] ?></td>
-                
+                <td><?php echo $row['tipoSacerdote'] ?></td>
+               
       
       <td> 
       <div class="btn-toolbar" >
 
         <div class="btn-group mr-2" role="group" aria-label="Third group">
         <button type="button" id="btnmodalp" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalmodificar" 
-        data-id="<?php echo $row['idDatosPersona']  ?>" data-nom="<?php echo $row['nombre']  ?>" 
-        data-lug="<?php echo $row['lugarNacimiento']  ?>" data-fech="<?php echo $row['fechaNacimiento']  ?>">
+        data-id="<?php echo $row['idDatosPersona']  ?>" data-nom="<?php echo $row['nombre']  ?>">
         <span data-feather="edit-3">
         </button>
+
+        <div style=" width: 5px;"></div>
+
+          <div class="btn-group mr-2" role="group" aria-label="Third group">
+          <button type="button" id="btneliminar" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#meliminar"
+          data-ide="<?php echo $row['idPersona']  ?>">
+          <span data-feather="delete">
+          </button>
             </div>  
           </div>    
           </td>
@@ -266,14 +278,14 @@
 
                 <label for="inputAddress">Nombre del Sacerdote:</label>
                 <input type="text" class="form-control" id="" placeholder="Nombre" name="nombre"> 
+                <br>
+                <select class="form-select" aria-label="Default select example" name="sacerdote">
+                  <option selected value="0">Tipo de Sacerdote</option>
+                  <option value="Parroco">Párroco</option>
+                  <option value="Parroco Adjunto">Párroco Adjunto</option>
+                  <option value="Otro">Otro</option>
+                </select>
               
-              
-                <label for="inputAddress2">Lugar de nacimiento:</label>
-                <input type="text" class="form-control" id="" placeholder="Lugar" name="lugar">
-            
-             
-                <label for="inputAddress2">Fecha de nacimiento:</label>
-                <input type="date" class="form-control" id="" placeholder="" name="fecha">
 
                 
     
@@ -309,14 +321,14 @@
 
                 <label for="inputAddress">Nombre del Sacerdote:</label>
                 <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre"> 
+              <br>
+                <select class="form-select" aria-label="Default select example" name="sacerdote">
+                  <option selected value="0" >Tipo de Sacerdote</option>
+                  <option value="Parroco">Parroco</option>
+                  <option value="Parroco Adjunto">Parroco Adjunto</option>
+                  <option value="Otro">Otro</option>
+                </select>
               
-              
-                <label for="inputAddress2">Lugar de nacimiento:</label>
-                <input type="text" class="form-control" id="lugar" placeholder="Lugar" name="lugar">
-            
-             
-                <label for="inputAddress2">Fecha de nacimiento:</label>
-                <input type="date" class="form-control" id="" placeholder="" name="fecha">
 
                 
     
@@ -332,6 +344,34 @@
 
 
 
+ 
+    
+<!-- Modal eliminar -->
+<div class="modal fade" id="meliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Advertencia!</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/eliminarsacerdotes.php" method="POST">
+      <input type="text" hidden class="form-control" id="saceeliminar" placeholder="Nombre" name="eidsace">
+        <center>
+        <h6>¿Está seguro que desea eliminar al sacerdote?</h6>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -344,19 +384,25 @@
   $(document).on("click", "#btnmodalp", function (){
     var idus =$(this).data('id');
     var nombre =$(this).data('nom');
-    var lugar =$(this).data('lug');
-    var fecha =$(this).data('fech');
+    
     
     
 
     $("#idp").val(idus);
     $("#nombre").val(nombre);
-    $("#lugar").val(lugar);
-    $("#fecha").val(fecha);
+    
   })
      
 
 
+
+  $(document).on("click", "#btneliminar", function (){
+    var ideace =$(this).data('ide');
+ 
+    $("#saceeliminar").val(ideace);
+  
+     
+  })
 
 </script>
 

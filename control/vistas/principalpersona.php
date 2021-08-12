@@ -121,6 +121,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes
@@ -185,7 +191,7 @@
            <br>
     
         
-         <table id="sacramentados" class="table table-striped " style="width:100%">
+         <table id="formato" class="table table-striped " style="width:100%">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -210,7 +216,8 @@
       LEFT JOIN persona as per on sac.Persona_idMadre =  per.idPersona
       LEFT JOIN datospersona as dper on  per.DatosPersona_idDatosPersona = dper.idDatosPersona
       LEFT JOIN persona as por on sac.Persona_idPadre =  por.idPersona
-      LEFT JOIN datospersona as dpor on  por.DatosPersona_idDatosPersona = dpor.idDatosPersona  ";
+      LEFT JOIN datospersona as dpor on  por.DatosPersona_idDatosPersona = dpor.idDatosPersona 
+      WHERE sac.estado = 1 ";
       
       
       $resul = mysqli_query($conn,$consu);
@@ -241,6 +248,15 @@
         data-lugn="<?php echo $row['lugn']  ?>" data-luga="<?php echo $row['luga']  ?>" >
         <span data-feather="edit-3">
         </button>
+
+        <div style=" width: 5px;"></div>
+
+          <div class="btn-group mr-2" role="group" aria-label="Third group">
+          <button type="button" id="btneliminar" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#meliminar"
+          data-ide="<?php echo $row['idp'] ?>">
+          <span data-feather="delete">
+          </button>
+
             </div>  
           </div>    
           </td>
@@ -448,6 +464,40 @@
 </div>
 
 
+
+
+<!-- Modal eliminar -->
+<div class="modal fade" id="meliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Advertencia!</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/eliminarsacramentados.php" method="POST">
+      <input type="text" hidden class="form-control" id="saceliminar" placeholder="Nombre" name="eidsac">
+        <center>
+        <h6>¿Está seguro que desea eliminar al sacramentado?</h6>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -474,6 +524,13 @@ $(document).ready(function(){
 
   
 
+  $(document).on("click", "#btneliminar", function (){
+    var idesac =$(this).data('ide');
+ 
+    $("#saceliminar").val(idesac);
+  
+     
+  })
 
 </script>
 

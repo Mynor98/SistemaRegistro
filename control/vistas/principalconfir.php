@@ -107,6 +107,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes

@@ -118,6 +118,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes
@@ -159,7 +165,7 @@
 
     <main id="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     
-      <div class="container col-lg-10" style=" background-color: white; padding-top: 20px; padding-bottom: 20px; border-radius: 20px;" >
+      <div class="container col-lg-12" style=" background-color: white; padding-top: 20px; padding-bottom: 20px; border-radius: 20px;" >
         <div class ="row">
           <div class="col-lg-12">
 
@@ -182,29 +188,30 @@
                     <br>
                 
 
-                    <table id="bautizo" class="table table-striped "  style="width:100%">
+                    <table id="formato" class="table table-striped "  style="width:100%">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Libro</th>
-                <th scope="col">Folio</th>
+                <th scope="col">No.Libro</th>
+                <th scope="col">No.Folio</th>
+                <th scope="col">No.Supletoria</th>
                 <th scope="col">Fecha del Sacramento</th>
-                <th scope="col">Sacerdote</th>
-                <th scope="col">Tipo de sacramento</th>
+                <th scope="col">Edad del Sacramento</th>
                 <th scope="col">Primer padrino</th>
                 <th scope="col">Segundo padrino</th>
                 <th scope="col">Notas</th>
-                <th scope="col">Supletoria</th>
+              
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody>
             <?php 
-            
+           
             
               //codigo llenar tabla
-                $consu = " SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio,reg.fechaSacramento, 
+              /*
+                $consu = " SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio, reg.noSupletoria,reg.fechaSacramento,reg.edadSacramento, 
                 sacra.nombreSacramentos as sacramento , sac.nombre,sac.genero,dper.nombre as padrino1,dpers.nombre as padrino2,
                 reg.alMargen, reg.supletoria, dperso.nombre as sacer from registro as reg
                 LEFT JOIN sacramentados as sac on reg.Sacramentados_idDatosPersona =  sac.idDatosPersona
@@ -220,14 +227,18 @@
                 LEFT JOIN persona as sas on reg.Persona_idPersonaSacerdote = sas.idPersona
                 LEFT JOIN datospersona as dperso on sas.DatosPersona_idDatosPersona = dperso.idDatosPersona
                 
-                WHERE reg.Sacramentos_idSacramentos = 1  ";
-                
+                WHERE reg.Sacramentos_idSacramentos = 1  order by reg.fechaSacramento desc";
+                */
+                $consu ="SELECT * from datospersona";
                 
                 $resul = mysqli_query($conn,$consu);
-
+ 
                       $iteracion =0;
+                      
                       while($row = mysqli_fetch_array($resul)){
                         $iteracion ++;
+                      }
+                        /*
                         ?>
                       
                         <tr>
@@ -235,13 +246,15 @@
                           <td><?php echo $row['nombre'] ?></td>
                           <td><?php echo $row['noLibro'] ?></td>
                           <td><?php echo $row['noFolio'] ?></td>
+                          <td><?php echo $row['noSupletoria'] ?></td>
                           <td><?php echo $row['fechaSacramento'] ?></td>
-                          <td><?php echo $row['sacer'] ?></td>
-                          <td><?php echo $row['sacramento'] ?></td>
+                         <td><?php echo $row['edadSacramento'] ?></td>
+                         
+                          
                           <td><?php echo $row['padrino1'] ?></td>
                           <td><?php echo $row['padrino2'] ?></td>
                           <td><?php echo $row['alMargen'] ?></td>
-                          <td><?php if($row['supletoria'] == 1){echo "Si";}else{echo "No";} ?></td>
+                         
                         
                           
                 
@@ -271,7 +284,7 @@
 
               </tr>
               <?php 
-            }
+            }*/
               ?>
                 </tbody>
                   </table>
@@ -288,7 +301,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Sacerdote</h5>
         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
         <span data-feather="x"></span>
         </button>
@@ -320,7 +333,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Generar acta</button>
+        <button type="submit" class="btn btn-primary" >Generar acta</button>
       </div>
       </form>
     </div>
@@ -349,14 +362,13 @@
     var idacb =$(this).data('idrb');
     
     
-    
-    
     $("#idbau").val(idacb);
    
    
   })
 
  
+  
 
 </script>
 

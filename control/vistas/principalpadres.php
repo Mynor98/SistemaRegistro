@@ -118,6 +118,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes
@@ -182,7 +188,7 @@
            <hr>
      
         <br>
-         <table id="padres" class="table table-striped " style="width:100%">
+         <table id="formato" class="table table-striped " style="width:100%">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -196,9 +202,9 @@
   
   
      //codigo llenar tabla
-      $consu = "SELECT dper.idDatosPersona, dper.nombre FROM persona as per
+      $consu = "SELECT dper.idDatosPersona,per.idPersona,per.estado, dper.nombre FROM persona as per
       INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-      WHERE per.TipoPersona_idTipoPersona = 1 ";
+      WHERE per.TipoPersona_idTipoPersona = 1 and per.estado = 1 ";
 
       $resul = mysqli_query($conn,$consu);
 
@@ -220,6 +226,14 @@
         data-id="<?php echo $row['idDatosPersona']  ?>" data-nom="<?php echo $row['nombre']  ?>">
         <span data-feather="edit-3">
         </button>
+            <div style=" width: 5px;"></div>
+
+          <div class="btn-group mr-2" role="group" aria-label="Third group">
+          <button type="button" id="btneliminar" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#meliminar"
+          data-ide="<?php echo $row['idPersona']  ?>">
+          <span data-feather="delete">
+          </button>
+      
             </div>  
           </div>    
           </td>
@@ -261,7 +275,7 @@
                 <input type="text" class="form-control" id="nlibro" placeholder="Nombre" name="nombre">
               
                 <label for="inputAddress">Seleccionar genero:</label>
-                    	<select class="custom-select custom-select-lg mb-3" style="width: 100%" name="genero">
+                    	<select class="form-select" aria-label="Default select example" name="genero">
                         <option selected value="0">Genero</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
@@ -321,6 +335,33 @@
 </div>
 
     
+ 
+    
+<!-- Modal eliminar -->
+<div class="modal fade" id="meliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Advertencia!</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/eliminarpadres.php" method="POST">
+      <input type="text" hidden class="form-control" id="padreliminar" placeholder="Nombre" name="eidpadre">
+        <center>
+        <h6>¿Está seguro que desea eliminar al padre?</h6>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
    
@@ -343,7 +384,13 @@
   })
      
 
-
+  $(document).on("click", "#btneliminar", function (){
+    var idepadr =$(this).data('ide');
+ 
+    $("#padreliminar").val(idepadr);
+  
+     
+  })
 </script>
 
 

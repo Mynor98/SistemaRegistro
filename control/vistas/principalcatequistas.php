@@ -120,6 +120,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="principalobispo.php">
+              <span data-feather="users"></span>
+              Obispo
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="principalsacerdote.php">
               <span data-feather="users"></span>
               Sacerdotes
@@ -179,7 +185,7 @@
             <hr>
     
         <br>
-         <table id="catequistas" class="table table-striped " style="width:100%">
+         <table id="formato" class="table table-striped " style="width:100%">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -193,9 +199,9 @@
   
   
      //codigo llenar tabla
-      $consu = "SELECT dper.idDatosPersona, dper.nombre, dper.sector FROM persona as per
+      $consu = "SELECT dper.idDatosPersona,per.idPersona, dper.nombre, dper.sector, per.estado FROM persona as per
       INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-      WHERE per.TipoPersona_idTipoPersona = 3 ";
+      WHERE per.TipoPersona_idTipoPersona = 3 and per.estado = 1 ";
 
       $resul = mysqli_query($conn,$consu);
 
@@ -211,6 +217,7 @@
       
       <td> 
       <div class="btn-toolbar" >
+         
 
         <div class="btn-group mr-2" role="group" aria-label="Third group">
 
@@ -220,6 +227,16 @@
         <span data-feather="edit-3">
         </button>
         
+            </div>
+
+                <div style=" width: 5px;"></div>
+
+            <div class="btn-group mr-2" role="group" aria-label="Third group">
+          <button type="button" id="btneliminar" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#meliminar"
+          data-ide="<?php echo $row['idPersona'] ?>">
+          <span data-feather="delete">
+          </button>
+
             </div>
           </div>    
           </td>
@@ -269,7 +286,7 @@
             
                 <label for="inputAddress">Seleccionar genero:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorper" style="width: 100%" name="genero">
+                    	<select class="form-select" aria-label="Default select example" name="genero">
                         <option  value = "0" selected  >Genero</option>
                         <option value ="Masculino">Masculino</option>
                         <option value ="Femenino">Femenino</option>
@@ -324,6 +341,48 @@
 
 
 
+
+<!-- Modal eliminar -->
+<div class="modal fade" id="meliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Advertencia!</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/eliminarCatequista.php" method="POST">
+      <input type="text" hidden class="form-control" id="cateliminar" placeholder="Nombre" name="eidcat">
+        <center>
+        <h6>¿Está seguro que desea eliminar al catequista?</h6>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
 			$('#buscadorper').select2();
@@ -338,12 +397,19 @@
     var nombre =$(this).data('nom');
     var sector =$(this).data('sec');
     
-
     $("#idcat").val(idus);
     $("#nombre").val(nombre);
     $("#sector").val(sector);
      
+  })
 
+
+  $(document).on("click", "#btneliminar", function (){
+    var idecat =$(this).data('ide');
+ 
+    $("#cateliminar").val(idecat);
+  
+     
   })
 
  
