@@ -1,3 +1,7 @@
+<?php
+     include '../modelos/conector.php';      
+    
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +15,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/select2.css">
-	  <script src="js/jquery-3.1.1.min.js"></script>
+	
+    <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap4.min.css"></link>
+		<script src="js/jquery-3.5.1.js"></script>   
+    <script src="js/jquery.dataTables.min.js"></script>   
+		<script src="js/dataTables.bootstrap4.min.js"></script> 
+    <script src="js/dataTables.responsive.min.js"></script>  
+    <script src="js/responsive.bootstrap4.min.js"></script>  
+    
   	<script src="js/select2.js"></script>
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -172,51 +183,113 @@
                 <a class="btn btn-primary  btn-sm" href="actsupcomunion.php" role="button"> <span data-feather="plus"></span> Registrar supletoria de primera comunión</a>
                 </div>
            </div>    
-           <br>
-      <div class="input-group col-md-12">
-                      <label for="inputAddress">Buscar nombre para acta solicitada</label>
-                      <span class="input-group"></span>
-                    	<select id="buscadorper" style="width: 60%">
-                        <option selected  >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
-                      </select>
-
-                      <button class="input-group-text btn-primary btn-sm" ><span data-feather="search"></span> Buscar</button>  
-         </div>
+           
+     <hr>
         <br>
-         <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+        <table id="formato" class="table table-striped "  style="width:100%">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">No.Libro</th>
+                <th scope="col">No.Folio</th>
+                <th scope="col">No.Supletoria</th>
+                <th scope="col">Padres</th>
+                <th scope="col">Fecha del Sacramento</th>
+                <th scope="col">Catequista</th>
+                
+                
+              
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php 
+           
+            
+              //codigo llenar tabla
+              
+                $consu = " SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio, reg.noSupletoria,reg.fechaSacramento,
+                sac.nombre,daper.nombre as papa, dapers.nombre as mama,dper.nombre as catequista
+               , reg.supletoria, dperso.nombre as sacer from registro as reg
+               
+               LEFT JOIN sacramentados as sac on reg.Sacramentados_idDatosPersona =  sac.idDatosPersona
+               
+               LEFT JOIN persona as perr on perr.idPersona = sac.Persona_idPadre
+               LEFT JOIN datospersona as daper on daper.idDatosPersona = perr.DatosPersona_idDatosPersona
+
+               LEFT JOIN persona as perss on perss.idPersona = sac.Persona_idMadre
+               LEFT JOIN datospersona as dapers on dapers.idDatosPersona = perss.DatosPersona_idDatosPersona
+             
+              
+               LEFT JOIN persona as pers on reg.Persona_idPersonaCat = pers.idPersona
+               LEFT JOIN datospersona as dper on pers.DatosPersona_idDatosPersona = dper.idDatosPersona
+               
+               
+               LEFT JOIN sacramentos as sacra on reg.Sacramentos_idSacramentos = sacra.idSacramentos 
+               
+               LEFT JOIN persona as sas on reg.Persona_idPersonaSacerdote = sas.idPersona
+               LEFT JOIN datospersona as dperso on sas.DatosPersona_idDatosPersona = dperso.idDatosPersona
+               
+               WHERE reg.Sacramentos_idSacramentos = 2  order by reg.fechaSacramento desc";
+                
+               
+                
+                $resul = mysqli_query($conn,$consu);
+ 
+                      $iteracion =0;
+                      
+                      while($row = mysqli_fetch_array($resul)){
+                        $iteracion ++;
+                      
+                        
+                        ?>
+                      
+                        <tr>
+                          <th scope="row"><?php echo $iteracion ?></th>
+                          <td><?php echo $row['nombre'] ?></td>
+                          <td><?php echo $row['noLibro'] ?></td>
+                          <td><?php echo $row['noFolio'] ?></td>
+                          <td><?php if (!empty($row['noSupletoria'])){ echo $row['noSupletoria'];}else{ echo"No aplica";} ?></td>
+                          <td><?php echo $row['papa']." / ".$row['mama'] ?></td>
+                          <td><?php if(!empty($row['fechaSacramento'])){echo $row['fechaSacramento'];}else{echo"No ingresado";} ?></td>
+                          <td><?php if(!empty($row['catequista'])){echo $row['catequista'];}else{echo "No ingresado";} ?></td>
+                         
+                          
+                      
+                         
+                        
+                          
+                
+                <td> 
+                <div class="btn-toolbar" >
+
+                <div class="btn-group mr-2" role="group" aria-label="Third group">
+                        
+                  <button type="button" id="btndoc" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#documento" 
+                  data-idrb="<?php echo $row['idreg'] ?>"  >
+                  <span data-feather="file">
+                  </button>
+                </div>
+                        <div style=" width: 5px;"></div>
+
+                  <div class="btn-group mr-2" role="group" aria-label="Third group">
+                  <button type="button" id="btnmodalsac" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalmodificar" 
+                 >
+                  <span data-feather="edit-3">
+                  </button>
+                      </div>  
+                    </div>    
+                    </td>
+
+
+
+              </tr>
+              <?php 
+                 }
+              ?>
+                </tbody>
+                  </table>
 
 </div>
 </div>
@@ -226,6 +299,48 @@
   
 
 
+    <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Sacerdote</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+              <form target="_blank" action="../controladores/pdfcomunion.php" method="POST">
+      <input type="text" hidden class="form-control" id="idbau" placeholder="" name="idcomunion">
+            
+                          <label for="inputAddress">Seleccionar nombre del Sacerdote encargado:</label>
+                      <select class="form-select" aria-label="Default select example" name="sacerdote">
+                        <option value="0" selected >Buscar sacerdote</option>
+                        <?php
+                       
+                       $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
+                        INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
+                        WHERE per.TipoPersona_idTipoPersona = 4 ORDER BY dper.nombre ASC";
+                        $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+     
+      
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" >Generar acta</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
@@ -239,14 +354,22 @@
 	});
 
 
-  
+  $(document).on("click", "#btndoc", function (){
+    var idacb =$(this).data('idrb');
+    
+    
+    $("#idbau").val(idacb);
+   
+   
+  })
+
 
 
 </script>
 
 
 
-
+<script src="js/datatables.js"></script>
         <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>

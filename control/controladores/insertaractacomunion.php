@@ -19,8 +19,8 @@ echo $catequista;
 
        if(!empty($fecha)){ 
         if($catequista !=0){
-        $sqlcon = "INSERT INTO registro (noLibro, noFolio, fechaSacramento,Sacramentos_idSacramentos, Sacramentados_idDatosPersona,  Persona_idPersonaCat)
-                        VALUES ($libro,$folio,'$fecha',2,$sacramentado, $catequista)";
+        $sqlcon = "INSERT INTO registro (noLibro, noFolio, fechaSacramento,supletoria,Sacramentos_idSacramentos, Sacramentados_idDatosPersona,  Persona_idPersonaCat)
+                        VALUES ($libro,$folio,'$fecha',0,2,$sacramentado, $catequista)";
         
         if (mysqli_query($conn, $sqlcon)) {
             
@@ -39,8 +39,8 @@ echo $catequista;
             
         } 
     }else{
-        $sqlcon = "INSERT INTO registro (noLibro, noFolio, fechaSacramento,Sacramentos_idSacramentos, Sacramentados_idDatosPersona)
-        VALUES ($libro,$folio,'$fecha',2,$sacramentado)";
+        $sqlcon = "INSERT INTO registro (noLibro, noFolio, fechaSacramento,supletoria,Sacramentos_idSacramentos, Sacramentados_idDatosPersona)
+        VALUES ($libro,$folio,'$fecha',0,2,$sacramentado)";
 
                 if (mysqli_query($conn, $sqlcon)) {
 
@@ -81,8 +81,8 @@ echo $catequista;
 
         }   
     }else{
-        $sqlcon = "INSERT INTO registro (noLibro, noFolio,Sacramentos_idSacramentos, Sacramentados_idDatosPersona)
-        VALUES ($libro,$folio,2,$sacramentado)";
+        $sqlcon = "INSERT INTO registro (noLibro, noFolio,supletoria,Sacramentos_idSacramentos, Sacramentados_idDatosPersona)
+        VALUES ($libro,$folio,0,2,$sacramentado)";
 
         if (mysqli_query($conn, $sqlcon)) {
 

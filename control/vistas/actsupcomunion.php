@@ -239,7 +239,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Catequista:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpdd" style="width: 60%" ="catequista">
+                    	<select id="buscadorpdd" style="width: 60%" ="catequista" name="catequista">
                       <option value="0" selected  >Buscar nombre</option>
                         <?php
                        

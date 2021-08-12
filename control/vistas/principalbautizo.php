@@ -197,7 +197,7 @@
                 <th scope="col">No.Folio</th>
                 <th scope="col">No.Supletoria</th>
                 <th scope="col">Fecha del Sacramento</th>
-                <th scope="col">Edad del Sacramento</th>
+                <th scope="col">Edad del Sacramentado</th>
                 <th scope="col">Primer padrino</th>
                 <th scope="col">Segundo padrino</th>
                 <th scope="col">Notas</th>
@@ -210,7 +210,7 @@
            
             
               //codigo llenar tabla
-              /*
+              
                 $consu = " SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio, reg.noSupletoria,reg.fechaSacramento,reg.edadSacramento, 
                 sacra.nombreSacramentos as sacramento , sac.nombre,sac.genero,dper.nombre as padrino1,dpers.nombre as padrino2,
                 reg.alMargen, reg.supletoria, dperso.nombre as sacer from registro as reg
@@ -228,8 +228,8 @@
                 LEFT JOIN datospersona as dperso on sas.DatosPersona_idDatosPersona = dperso.idDatosPersona
                 
                 WHERE reg.Sacramentos_idSacramentos = 1  order by reg.fechaSacramento desc";
-                */
-                $consu ="SELECT * from datospersona";
+                
+               
                 
                 $resul = mysqli_query($conn,$consu);
  
@@ -237,8 +237,8 @@
                       
                       while($row = mysqli_fetch_array($resul)){
                         $iteracion ++;
-                      }
-                        /*
+                      
+                        
                         ?>
                       
                         <tr>
@@ -284,7 +284,7 @@
 
               </tr>
               <?php 
-            }*/
+                 }
               ?>
                 </tbody>
                   </table>
