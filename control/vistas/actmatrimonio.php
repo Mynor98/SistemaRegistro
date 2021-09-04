@@ -1,3 +1,6 @@
+<?php
+     include '../modelos/conector.php'; 
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,7 +25,7 @@
   <body>
     
 <header class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" id="barra">
-  <a class="nav-link col-md-3 col-lg-2 me-0 px-3" href="index.php" id="esimg"><img src="logo.png" alt="" id="imagen"></a>
+  <a class="nav-link col-md-3 col-lg-2 me-0 px-3" href="index.php" id="esimg"><img src="img/logo.png" alt="" id="imagen"></a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation" >
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -157,19 +160,20 @@
     
       <div  id="contenedorform">
               <h3>Registro de Matrimonio</h3>
-          <form class="row">
+              <hr>
+          <form class="row" action="../controladores/insertaractamatrimonio.php" method = "POST">
               
               <div class="form-group col-md-6">
                 <label for="inputAddress">Numero de libro:</label>
-                <input type="text" class="form-control" id="nlibro" placeholder="No. Libro">
+                <input type="text" class="form-control" id="nlibro" placeholder="No. Libro" name = "libro">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputAddress2">Numero de folio:</label>
-                <input type="text" class="form-control" id="nfolio" placeholder="No. Folio">
+                <input type="text" class="form-control" id="nfolio" placeholder="No. Folio" name = "folio">
               </div>
               <div class="form-group">
                 <label for="inputAddress2">Fecha de Matrimonio:</label>
-                <input type="date" class="form-control" id="fbautizo" placeholder="">
+                <input type="date" class="form-control" id="fbautizo" placeholder="" name = "fecha">
               </div>
 
               <div class="form-row">
@@ -178,12 +182,20 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Nombre del novio:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorno" style="width: 60%">
-                        <option selected  >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
+                    	<select id="buscadorno" style="width: 87.5%" name = "novio">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $select = "SELECT * FROM sacramentados where estado = 1 and genero = 'Masculino' ORDER BY nombre ASC";
+
+                        $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idDatosPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
                       </select>
                       <button type="button" class="btn btn-primary btn-sm" id="btnpersona">
                         Registrar Novio
@@ -193,12 +205,20 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Nombre de la novia:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorna" style="width: 60%">
-                        <option selected  >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
+                    	<select id="buscadorna" style="width: 87.5%" name = "novia">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $select = "SELECT * FROM sacramentados where estado = 1 and genero = 'Femenino' ORDER BY nombre ASC";
+
+                        $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idDatosPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
                       </select>
                       <button type="button" class="btn btn-primary btn-sm" id="btnpersona2">
                         Registrar Novia
@@ -208,12 +228,22 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Nombre del Sacerdote:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorsa" style="width: 60%">
-                        <option selected  >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
+                    	<select id="buscadorsa" style="width: 84.5%" name = "sacerdote">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $selecsa = "SELECT per.idPersona,per.TipoPersona_idTipoPersona ,dp.nombre FROM persona as per
+                                   INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
+                                   WHERE TipoPersona_idTipoPersona = 4 and estado = 1  ORDER BY nombre ASC";
+
+                        $ejecutarsa=mysqli_query($conn,$selecsa) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutarsa as $opcionessa): ?>
+
+                      <option value="<?php echo $opcionessa['idPersona']  ?>"><?php echo $opcionessa['nombre']?></option>
+
+                      <?php endforeach ?>
                       </select>
                       <button type="button" class="btn btn-primary btn-sm" id="btnsacerdote">
                         Registrar Sacerdote
@@ -225,12 +255,22 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Padrino #1:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpd" style="width: 60%">
-                        <option selected >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
+                    	<select id="buscadorpd" style="width: 86.10%" name = "padrinou">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $selectd = "SELECT per.idPersona, per.TipoPersona_idTipoPersona, dp.nombre  FROM persona as per
+                                   INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
+                                   WHERE TipoPersona_idTipoPersona = 2 and estado = 1 ORDER BY nombre ASC";
+
+                        $ejecutard=mysqli_query($conn,$selectd) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutard as $opcionesd): ?>
+
+                      <option value="<?php echo $opcionesd['idPersona']  ?>"><?php echo $opcionesd['nombre']?></option>
+
+                      <?php endforeach ?>
                       </select>
                       <button type="button" class="btn btn-primary btn-sm" id="btnpadrino">
                         Registrar Padrino
@@ -239,12 +279,22 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Padrino #2:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpdd" style="width: 60%">
-                        <option selected >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
+                    	<select id="buscadorpdd" style="width: 86.10%" name = "padrinod">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $selectd = "SELECT per.idPersona, per.TipoPersona_idTipoPersona, dp.nombre  FROM persona as per
+                                   INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
+                                   WHERE TipoPersona_idTipoPersona = 2 and estado = 1 ORDER BY nombre ASC";
+
+                        $ejecutard=mysqli_query($conn,$selectd) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutard as $opcionesd): ?>
+
+                      <option value="<?php echo $opcionesd['idPersona']  ?>"><?php echo $opcionesd['nombre']?></option>
+
+                      <?php endforeach ?>
                       </select>
                       <button type="button" class="btn btn-primary btn-sm" id="btnpadrino2">
                         Registrar Padrino
@@ -280,66 +330,92 @@
     
   
   
-  
-<!-- Modalpersona -->
+  <!-- Modal persona -->
 <div class="modal fade" id="mpersona" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar</u></h5>
-        <button type="button" id="btncerrar" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Participante</u></h5>
+        <button type="button" class="btn btn-danger btn-sm" id="btncerrar">
         <span data-feather="x"></span>
         </button>
       </div>
       <div class="modal-body">
-      <label for="inputAddress">Nombre:</label>
-                <input type="text" class="form-control" id="nlibro" placeholder="Nombre">
-              
-                <div class="form-group col-md-12">
-                     <label for="inputAddress2">Feligrés de:</label>
-                     <input type="text" class="form-control" id="nfolio" placeholder="Feligrés">
-                  </div>
+              <form action="../controladores/insertarsacramentadomat.php" method="POST">
+                <label for="inputAddress">Nombre del Sacramentado:</label>
+                <input type="text" class="form-control" id="nlibro" placeholder="Nombre" name="nombre">
+
+                <label for="inputAddress2">Genero del sacramentado:</label>
+                <select class="form-select" aria-label="Default select example" name="genero">
+                  <option value="0" selected>Genero</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
                   
+                </select>
+              
+              
                 <label for="inputAddress2">Lugar de nacimiento:</label>
-                <input type="text" class="form-control" id="nfolio" placeholder="Lugar">
+                <input type="text" class="form-control" id="" placeholder="Lugar" name="lugarn">
 
                 <label for="inputAddress">Lugar donde vive actualmente:</label>
-                <input type="text" class="form-control" id="nlibro" placeholder="Lugar">
+                <input type="text" class="form-control" id="nlibro" placeholder="Lugar" name="lugara">
              
                 <label for="inputAddress2">Fecha de nacimiento:</label>
-                <input type="date" class="form-control" id="fbautizo" placeholder="">
+                <input type="date" class="form-control" id="fbautizo" placeholder="" name="fecha">
               
 
-<br>
+
                 
                       <label for="inputAddress">Seleccionar nombre del Padre:</label>
-                    	<select class="custom-select custom-select-lg mb-3" style="width: 100%">
-                        <option selected >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
-                      </select>
-                      
-                 
-
-                  
-
-                  
-                      <label for="inputAddress">Seleccionar nombre de la Madre:</label>
-                    	<select id="buscadorma" style="width: 100%">
-                        <option selected >Buscar nombre</option>
-                        <option>Belgica</option>
-                        <option>Estado unidos</option>
-                        <option>brasil</option>
-                        <option>canada</option>
-                      </select>
+                      <select class="form-select" aria-label="Default select example" name="padre">
+                        <option value="0" selected >Buscar padre</option>
+                        <?php
                        
+                       $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
+                        INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino' and estado = 1 ORDER BY dper.nombre ASC";
+                        $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+
+
+                      <label for="inputAddress">Seleccionar nombre de la Madre:</label>
+                      <select class="form-select" aria-label="Default select example" name="madre">
+                        <option value="0" selected >Buscar madre</option>
+                        <?php
+                       
+                       $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
+                        INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' and estado = 1 ORDER BY dper.nombre ASC";
+                        $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+
+
+                      
+
+
+                       
+                  
+    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btncerrar2">Cerrar</button>
-        <button type="button" class="btn btn-primary">Registrar</button>
+        <button type="submit" class="btn btn-primary">Registrar</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -347,7 +423,8 @@
 
 
 
-<!-- Modal sacerdote-->
+
+<!-- Modal sacerdote -->
 <div class="modal fade" id="msacerdote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -358,25 +435,28 @@
         </button>
       </div>
       <div class="modal-body">
-              
-                <label for="inputAddress">Nombre del Sacerdote:</label>
-                <input type="text" class="form-control" id="nlibro" placeholder="Nombre">
-              
-              
-                <label for="inputAddress2">Lugar de nacimiento:</label>
-                <input type="text" class="form-control" id="nfolio" placeholder="Lugar">
-            
+              <form action="../controladores/insertarSacerdotemat.php" method="POST">
+
              
-                <label for="inputAddress2">Fecha de nacimiento:</label>
-                <input type="date" class="form-control" id="fbautizo" placeholder="">
+
+              <label for="inputAddress">Nombre del Sacerdote:</label>
+                <input type="text" class="form-control" id="" placeholder="Nombre" name="nombre"> 
+                <br>
+                <select class="form-select" aria-label="Default select example" name="sacerdote">
+                  <option selected value="0">Tipo de Sacerdote</option>
+                  <option value="Parroco">Párroco</option>
+                  <option value="Parroco Adjunto">Párroco Adjunto</option>
+                  <option value="Otro">Otro</option>
+                </select>
 
                 
     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btncerrars2">Cerrar</button>
-        <button type="button" class="btn btn-primary">Registrar</button>
+        <button type="submit" class="btn btn-primary">Registrar</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -384,7 +464,9 @@
 
 
 
-<!-- Modal -->
+
+
+<!-- Modal padrino -->
 <div class="modal fade" id="mpadrino" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -395,31 +477,29 @@
         </button>
       </div>
       <div class="modal-body">
-              
+                <form action="../controladores/insertarPadrinomat.php" method="POST">
+
                 <label for="inputAddress">Nombre del Padrino o madrina:</label>
-                <input type="text" class="form-control" id="nlibro" placeholder="Nombre">
+                <input type="text" class="form-control" id="nlibro" placeholder="Nombre" name="nombre">
               
                 <label for="inputAddress">Seleccionar genero:</label>
-                    	<select class="custom-select custom-select-lg mb-3" style="width: 100%">
-                        <option selected >Genero</option>
-                        <option>Masculino</option>
-                        <option>Femenino</option>
+                    	<select class="form-select" aria-label="Default select example" name="genero">
+                        <option value ="0" selected>Genero</option>
+                        <option value ="Masculino">Masculino</option>
+                        <option value = "Femenino">Femenino</option>
                       
                       </select>
-                      
-              
-
-                
+                             
     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btncerrarp2">Cerrar</button>
-        <button type="button" class="btn btn-primary">Registrar</button>
+        <button type="submit" class="btn btn-primary">Registrar</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
-
 
 
 
@@ -497,11 +577,8 @@
 
 
 
-      <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-     <!-- <script src="assets/dist/js/bootstrap.bundle.min.js"></script>-->
+
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
     
      
       <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>

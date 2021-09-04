@@ -324,7 +324,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino'  ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino' and estado = 1 ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 
@@ -343,7 +343,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' and estado = 1 ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 
@@ -420,7 +420,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino'  ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino' and estado = 1 ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 
@@ -439,7 +439,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' and estado = 1 ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 

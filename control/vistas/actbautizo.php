@@ -191,7 +191,7 @@
                         <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
-                       $select = "SELECT * FROM sacramentados  ORDER BY nombre ASC";
+                       $select = "SELECT * FROM sacramentados where estado = 1 ORDER BY nombre ASC";
 
                         $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
                         ?>
@@ -220,7 +220,7 @@
                        
                        $selectd = "SELECT per.idPersona, per.TipoPersona_idTipoPersona, dp.nombre  FROM persona as per
                                    INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
-                                   WHERE TipoPersona_idTipoPersona = 2 ORDER BY nombre ASC";
+                                   WHERE TipoPersona_idTipoPersona = 2 and estado = 1 ORDER BY nombre ASC";
 
                         $ejecutard=mysqli_query($conn,$selectd) or die(mysli_error($conn));
                         ?>
@@ -248,7 +248,7 @@
                        
                        $selectt = "SELECT per.idPersona,per.TipoPersona_idTipoPersona ,dp.nombre FROM persona as per
                                    INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
-                                   WHERE TipoPersona_idTipoPersona = 2 ORDER BY nombre ASC";
+                                   WHERE TipoPersona_idTipoPersona = 2 and estado = 1 ORDER BY nombre ASC";
 
                         $ejecutart=mysqli_query($conn,$selectt) or die(mysli_error($conn));
                         ?>
@@ -275,7 +275,7 @@
                        
                        $selecsa = "SELECT per.idPersona,per.TipoPersona_idTipoPersona ,dp.nombre FROM persona as per
                                    INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
-                                   WHERE TipoPersona_idTipoPersona = 4 ORDER BY nombre ASC";
+                                   WHERE TipoPersona_idTipoPersona = 4 and estado = 1  ORDER BY nombre ASC";
 
                         $ejecutarsa=mysqli_query($conn,$selecsa) or die(mysli_error($conn));
                         ?>
@@ -366,7 +366,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino'  ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino' and estado = 1  ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 
@@ -385,7 +385,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' and estado = 1 ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 

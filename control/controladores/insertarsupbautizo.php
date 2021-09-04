@@ -9,7 +9,7 @@
   $btest = $_POST['testigo'];
   $bpadu = $_POST['padrinou'];
   $bpadd = $_POST['padrinod'];
-  $bnotas = $_POST['notas'];
+ 
   
 /*
     echo $nlibro;
@@ -27,10 +27,10 @@
     echo $bpadu;
     echo "------";
     echo $bpadd;
-    echo "-----";
-    echo $bnotas;
+   
+ */
 
-*/
+
 
 
 
@@ -48,7 +48,7 @@
              if(!empty($bedad)){
                           
          $sqlcon = "INSERT INTO registro ( noLibro, noFolio, noSupletoria, edadSacramento, testimonioPersona, supletoria, Sacramentos_idSacramentos, Persona_idPadrinouno, Persona_idPadrinodos, Sacramentados_idDatosPersona)
-         VALUES ($nlibro, $nfolio, $nsuple,'$bedad', '$btest', 1, 1, $bpadu, $bpadd, $bsacra);";
+         VALUES ($nlibro, $nfolio, $nsuple,$bedad, '$btest', 1, 1, $bpadu, $bpadd, $bsacra);";
  
                  if (mysqli_query($conn, $sqlcon)) {
                           
@@ -83,7 +83,7 @@
              if(!empty($bedad)){
                  
                  $sqlcon = "INSERT INTO registro ( noLibro, noFolio, noSupletoria, edadSacramento, testimonioPersona, supletoria, Sacramentos_idSacramentos, Persona_idPadrinouno, Sacramentados_idDatosPersona)
-                 VALUES ($nlibro, $nfolio, $nsuple,'$bedad', '$btest', 1, 1, $bpadu, $bsacra)";
+                 VALUES ($nlibro, $nfolio, $nsuple,$bedad, '$btest', 1, 1, $bpadu, $bsacra)";
          
                          if (mysqli_query($conn, $sqlcon)) {
          

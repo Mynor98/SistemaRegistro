@@ -187,7 +187,7 @@
                         <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
-                       $select = "SELECT * FROM sacramentados  ORDER BY nombre ASC";
+                       $select = "SELECT * FROM sacramentados where estado = 1  ORDER BY nombre ASC";
 
                         $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
                         ?>
@@ -214,7 +214,7 @@
                        
                        $select = "SELECT dp.nombre, per.idPersona, per.TipoPersona_idTipoPersona FROM persona as per
                        INNER JOIN datospersona as dp on per.DatosPersona_idDatosPersona = dp.idDatosPersona
-                       where TipoPersona_idTipoPersona = 3 ORDER BY nombre ASC";
+                       where TipoPersona_idTipoPersona = 3 and estado = 1 ORDER BY nombre ASC";
 
                         $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
                         ?>
@@ -304,7 +304,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino'  ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Masculino' and estado = 1  ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 
@@ -323,7 +323,7 @@
                        
                        $nueva = "SELECT per.idPersona, dper.nombre FROM persona as per
                         INNER JOIN datospersona as dper ON per.DatosPersona_idDatosPersona = dper.idDatosPersona
-                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' ORDER BY dper.nombre ASC";
+                        WHERE per.TipoPersona_idTipoPersona = 1 and dper.genero = 'Femenino' and estado = 1 ORDER BY dper.nombre ASC";
                         $ejecutar=mysqli_query($conn,$nueva) or die(mysli_error($conn));
                         ?>
 

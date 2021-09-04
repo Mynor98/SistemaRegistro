@@ -209,7 +209,7 @@
             
               //codigo llenar tabla
               
-                $consu = " SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio, reg.noSupletoria,reg.fechaSacramento,
+                $consu = " SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio, reg.noSupletoria,reg.fechaSacramento,reg.supletoria,
                 sac.nombre,daper.nombre as papa, dapers.nombre as mama,dper.nombre as catequista
                , reg.supletoria, dperso.nombre as sacer from registro as reg
                
@@ -262,24 +262,35 @@
                           
                 
                 <td> 
-                <div class="btn-toolbar" >
+               
 
-                <div class="btn-group mr-2" role="group" aria-label="Third group">
+                <div class="btn-group " role="group" aria-label="Third group">
                         
-                  <button type="button" id="btndoc" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#documento" 
-                  data-idrb="<?php echo $row['idreg'] ?>"  >
+                  <button type="button" id="btndoc" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#documento" 
+                  data-idrb="<?php echo $row['idreg'] ?>">
                   <span data-feather="file">
                   </button>
-                </div>
+                
                         <div style=" width: 5px;"></div>
 
-                  <div class="btn-group mr-2" role="group" aria-label="Third group">
-                  <button type="button" id="btnmodalsac" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalmodificar" 
-                 >
+                  
+                  <button type="button" id="btnedit" class="btn btn-warning btn-sm" 
+                  data-idreg="<?php echo $row['idreg'] ?>" data-tipo="<?php echo $row['supletoria'] ?>"
+                  data-libro="<?php echo $row['noLibro'] ?>" data-folio="<?php echo $row['noFolio'] ?>"
+                  data-suplet="<?php echo $row['noSupletoria'] ?>">
                   <span data-feather="edit-3">
                   </button>
-                      </div>  
-                    </div>    
+
+                  <div style=" width: 5px;"></div>
+
+                  <button type="button" id="btndel" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminar" 
+                        data-idreg="<?php echo $row['idreg'] ?>">
+                        <span data-feather="delete">
+                        </button>
+
+
+                  </div> 
+                       
                     </td>
 
 
@@ -344,8 +355,286 @@
 
 
 
+ 
+<!-- Modal eliminar -->
+<div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Advertencia!</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/eliminaractas.php" method="POST">
+      <input type="text" hidden class="form-control" id="eliminarreg" placeholder="Nombre" name="idacta">
+        <center>
+        <h6>¿Está seguro que desea eliminar el acta?</h6>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
   
+
+
+  
+<!-- Modal editar acta -->
+<div class="modal fade" id="editaracta" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #FFCE54;">
+        <h5 class="modal-title" id="exampleModalLongTitle">Editar acta de Primera Comunión</h5>
+        <button type="button" class="btn btn-danger btn-sm" id="cerrar">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/editaractacomunion.php" method="POST">
+      <input type="text" hidden  class="form-control" id="idacta"  name="idacta">
+       
+      <div class="row">
+               <div class="form-group col-md-6">
+                <label for="inputAddress">Numero de libro:</label>
+                <input type="text" class="form-control" id="nlibroa" placeholder="No. Libro" name="libro">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputAddress2">Numero de folio:</label>
+                <input type="text" class="form-control" id="nfolioa" placeholder="No. Folio" name="folio">
+              </div>
+      </div>
+              <div class="form-group">
+                <label for="inputAddress2">Fecha que recibió por primera ves la Santa Comunión en esta Parroquia:</label>
+                <input type="date" class="form-control" id="fbautizo" placeholder="" name="fecha">
+              </div>
+
+              <div class="form-row">
+                <div class="form-row align-items-center">
+
+                  <div class="input-group col-md-12">
+                      <label for="inputAddress">Nombre de quien recibio el sacramento:</label>
+                      <span class="input-group"></span>
+                      <select class="form-select" aria-label="Default select example" name="sacramentado">
+                        <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $select = "SELECT * FROM sacramentados where estado = 1  ORDER BY nombre ASC";
+
+                        $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idDatosPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+                    
+                  </div>
+
+                
+
+                  <div class="input-group col-md-12">
+                      <label for="inputAddress">Nombre del catequista:</label>
+                      <span class="input-group"></span>
+                      <select class="form-select" aria-label="Default select example" name="catequista">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $select = "SELECT dp.nombre, per.idPersona, per.TipoPersona_idTipoPersona FROM persona as per
+                       INNER JOIN datospersona as dp on per.DatosPersona_idDatosPersona = dp.idDatosPersona
+                       where TipoPersona_idTipoPersona = 3 and estado = 1 ORDER BY nombre ASC";
+
+                        $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+                      
+                  </div>
+
+
+
+
+                 
+
+
+
+
+
+                </div>
+              
+              
+                        <br>
+                       
+              
+                  
+              </div>
+
+       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="cerrard">Cerrar</button>
+        <button type="submit" class="btn btn-warning">Editar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+ 
+  
+<!-- Modal editar supletoria -->
+<div class="modal fade" id="msupletoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #FFCE54;">
+        <h5 class="modal-title" id="exampleModalLongTitle">Editar Supletoria de Primera Comunión</h5>
+        <button type="button" class="btn btn-danger btn-sm" id="cerrarsupled">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/editarsupcomunion.php" method="POST">
+        <input type="text" hidden class="form-control" id="idsuple"  name="idacta">
+       
+
+        <div class="row">
+              <div class="form-group col-md-4">
+                <label for="inputAddress">Numero de libro:</label>
+                <input type="text" class="form-control" id="nlibros" placeholder="No. Libro" name="libro">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputAddress2">Numero de folio:</label>
+                <input type="text" class="form-control" id="nfolios" placeholder="No. Folio" name="folio">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputAddress2">Numero de supletoria:</label>
+                <input type="text" class="form-control" id="nsuples" placeholder="No. Supletoria" name="suple">
+              </div>
+            </div>  
+              <div class="form-group">
+                <label for="inputAddress2">Fecha que recibió por primera ves la Santa Comunión en esta Parroquia:</label>
+                <input type="date" class="form-control" id="fbautizo" placeholder="" name="fecha">
+              </div>
+
+              <div class="form-row">
+                <div class="form-row align-items-center">
+
+                  <div class="input-group col-md-12">
+                      <label for="inputAddress">Nombre de quien recibio el sacramento:</label>
+                      <span class="input-group"></span>
+                      <select class="form-select" aria-label="Default select example" name="sacramentado">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $select = "SELECT * FROM sacramentados where estado = 1 ORDER BY nombre ASC";
+
+                        $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idDatosPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+                      
+                  </div>
+
+                 
+
+               
+
+                  <div class="input-group col-md-12">
+                      <label for="inputAddress">Sacerdote:</label>
+                      <span class="input-group"></span>
+                      <select class="form-select" aria-label="Default select example" name="sacerdote">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $selecsa = "SELECT per.idPersona,per.TipoPersona_idTipoPersona ,dp.nombre FROM persona as per
+                                   INNER JOIN datospersona as dp on DatosPersona_idDatosPersona = idDatosPersona
+                                   WHERE TipoPersona_idTipoPersona = 4 and estado = 1 ORDER BY nombre ASC";
+
+                        $ejecutarsa=mysqli_query($conn,$selecsa) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutarsa as $opcionessa): ?>
+
+                      <option value="<?php echo $opcionessa['idPersona']  ?>"><?php echo $opcionessa['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+                     
+                  </div>
+
+                  <div class="input-group col-md-12">
+                      <label for="inputAddress">Catequista:</label>
+                      <span class="input-group"></span>
+                      <select class="form-select" aria-label="Default select example" name="catequista">
+                      <option value="0" selected  >Buscar nombre</option>
+                        <?php
+                       
+                       $select = "SELECT dp.nombre, per.idPersona, per.TipoPersona_idTipoPersona FROM persona as per
+                       INNER JOIN datospersona as dp on per.DatosPersona_idDatosPersona = dp.idDatosPersona
+                       where TipoPersona_idTipoPersona = 3 and estado = 1  ORDER BY nombre ASC";
+
+                        $ejecutar=mysqli_query($conn,$select) or die(mysli_error($conn));
+                        ?>
+
+                      <?php foreach ($ejecutar as $opciones): ?>
+
+                      <option value="<?php echo $opciones['idPersona']  ?>"><?php echo $opciones['nombre']?></option>
+
+                      <?php endforeach ?>
+                      </select>
+                      
+                  </div>
+                  
+                 
+
+
+
+
+
+                </div>
+              
+              
+                        
+                       
+              
+                  
+              </div>
+          
+
+
+
+    
+       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="cerrarsuple">Cerrar</button>
+        <button type="submit" class="btn btn-warning">Editar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -364,6 +653,71 @@
   })
 
 
+  $(document).on("click", "#btndel", function (){
+    var idacta =$(this).data('idreg');
+    
+    
+    $("#eliminarreg").val(idacta);
+   
+   
+  })
+
+
+
+  $(document).on("click", "#btnedit", function (){
+    var idedit =$(this).data('idreg');
+    var tipo =$(this).data('tipo');
+    var lib =$(this).data('libro');
+    var fol =$(this).data('folio');
+    var supletoria =$(this).data('suplet');
+    
+
+
+    //console.log(tipo);
+    
+    if(tipo == 1){// mostrar modal editar acta
+     
+     $('#msupletoria').modal('show');
+     $("#idsuple").val(idedit);
+
+     $("#nlibros").val(lib);
+     $("#nfolios").val(fol);
+     $("#nsuples").val(supletoria);
+    
+
+    }else if (tipo == 0){//mostrar modal editar supletoria
+      //$('#msupletoria').modal('show');
+      $('#editaracta').modal('show');
+      $("#idacta").val(idedit);
+
+      $("#nlibroa").val(lib);
+     $("#nfolioa").val(fol);
+    
+
+
+    }  
+    
+  
+      
+  })
+
+
+  
+  $(document).on("click", "#cerrar", function (){
+    $('#editaracta').modal('hide');
+  })
+
+  $(document).on("click", "#cerrard", function (){
+    $('#editaracta').modal('hide');
+  })
+
+  $(document).on("click", "#cerrarsupled", function (){
+    $('#msupletoria').modal('hide');
+  })
+
+  $(document).on("click", "#cerrarsuple", function (){
+    $('#msupletoria').modal('hide');
+  })
 
 </script>
 
