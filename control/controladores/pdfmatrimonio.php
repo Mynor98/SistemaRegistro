@@ -283,8 +283,8 @@ $pdf->SetY(108);
 $pdf->Cell(40,10,utf8_decode('hijo legitimo de:_______________________________________'));
 
 if ($espacioun != $madre){
-    if (!empty($madre)){$espaciodo = $madre ;}else{$espaciodo = "-------------------"; }
-}else{$espaciodo = "-------------------";}
+    if (!empty($madre)){$espaciodo = $madre ;}else{$espaciodo = "- - - - - - - - - - - -"; }
+}else{$espaciodo = "- - - - - - - - - - - -";}
 $pdf->SetY(116);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciodo));
 $pdf->SetY(116);
 $pdf->Cell(40,10,utf8_decode('y de:________________________________________________'));
@@ -314,8 +314,8 @@ $pdf->SetY(156);
 $pdf->Cell(40,10,utf8_decode('hija legitimo de:_______________________________________'));
 
 if ($espaciou != $madrenovia){
-    if (!empty($madrenovia)){$espaciod = $madrenovia ;}else{$espaciod = "-------------------"; }
-}else{$espaciod = "-------------------";}
+    if (!empty($madrenovia)){$espaciod = $madrenovia ;}else{$espaciod = "- - - - - - - - - - - -"; }
+}else{$espaciod = "- - - - - - - - - - - -";}
 
 $pdf->SetY(164);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciod));
 $pdf->SetY(164);
@@ -324,8 +324,8 @@ $pdf->Cell(40,10,utf8_decode('y de:_____________________________________________
 
 $pdf->SetY(172);
 $pdf->Cell(40,10,utf8_decode('Presencio y bendijo el Matrimonio el Padre:'));
-
-$pdf->SetY(180);$pdf->Cell(3);$pdf->Cell(40,10,utf8_decode($sacerd));
+if(!empty($sacerd)){$espsacer = $sacerd;}else{$espsacer = "- - - - - - - - - - - -";}
+$pdf->SetY(180);$pdf->Cell(3);$pdf->Cell(40,10,utf8_decode($espsacer));
 $pdf->SetY(180);
 $pdf->Cell(40,10,utf8_decode('____________________________________________________'));
 
@@ -347,7 +347,7 @@ $pdf->SetY(196);$pdf->Cell(47); $pdf->Cell(40,10,utf8_decode($padrinou));
 $pdf->SetY(196);
 $pdf->Cell(40,10,utf8_decode('habiendo sido testigos:_________________________________'));
 
-if(!empty($padrinod)){$casillad = $padrinod;}else{$casillad = "------------------";}
+if(!empty($padrinod)){$casillad = $padrinod;}else{$casillad = "- - - - - - - - - - - -";}
 $pdf->SetY(204);$pdf->Cell(6); $pdf->Cell(40,10,utf8_decode($casillad));
 $pdf->SetY(204);
 $pdf->Cell(40,10,utf8_decode('y___________________________________________________'));
@@ -616,7 +616,7 @@ $pdf->Output();
        $pdf->SetY(117);
        $pdf->Cell(40,10,utf8_decode('ante los testigos______________________________________'));
 
-       if(!empty($padrinod)){$casillados = $padrinod;}else{$casillados = "------------------";}
+       if(!empty($padrinod)){$casillados = $padrinod;}else{$casillados = "- - - - - - - - - - - -";}
        $pdf->SetY(125);$pdf->Cell(6); $pdf->Cell(40,10,utf8_decode($casillados));
        $pdf->SetY(125);
        $pdf->Cell(40,10,utf8_decode('y___________________________________________________'));
@@ -642,8 +642,8 @@ $pdf->Output();
        $pdf->Cell(40,10,utf8_decode('hijo de______________________________________________'));
        
        if ($espaciou != $madre){
-           if (!empty($madre)){$espaciod = $madre ;}else{$espaciod = "-------------------"; }
-       }else{$espaciod = "-------------------";}
+           if (!empty($madre)){$espaciod = $madre ;}else{$espaciod = "- - - - - - - - - - - -"; }
+       }else{$espaciod = "- - - - - - - - - - - -";}
        
        $pdf->SetY(165);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciod));
        $pdf->SetY(165);
@@ -676,13 +676,14 @@ $pdf->Output();
        $pdf->Cell(40,10,utf8_decode('hija de______________________________________________'));
        
        if ($espacioun != $madrenovia){
-           if (!empty($madrenovia)){$espaciodo = $madrenovia ;}else{$espaciodo = "-------------------"; }
-       }else{$espaciod = "-------------------";}
+           if (!empty($madrenovia)){$espaciodo = $madrenovia ;}else{$espaciodo = "- - - - - - - - - - - -"; }
+       }else{$espaciod = "- - - - - - - - - - - -";}
        
        $pdf->SetY(205);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciodo));
        $pdf->SetY(205);
        $pdf->Cell(40,10,utf8_decode('y de________________________________________________'));
 
+       if(!empty($testigo)){$esptest = $testigo;}else{$esptest = "- - - - - - - - - - - -";}
        $pdf->SetY(213);$pdf->Cell(51);$pdf->Cell(40,10,utf8_decode($testigo));
        $pdf->SetY(213);
        $pdf->Cell(40,10,utf8_decode('Se procedió a testimoniar_______________________________'));
@@ -761,7 +762,7 @@ $pdf->Output();
    }else{
        echo "<script> 
        alert('Error! debe especificar el Sacerdote encargado.'); 
-       window.location.href='../vistas/principalbautizo.php'; 
+       window.location.href='../vistas/principalmatrimonio.php'; 
        </script>"; 
    }
 

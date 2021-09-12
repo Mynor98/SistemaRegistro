@@ -1,3 +1,25 @@
+
+<?php
+    
+    //Iniciar una nueva sesión o reanudar la existente.
+    session_start();
+    //Si existe la sesión "cliente"..., la guardamos en una variable.
+    if (isset($_SESSION['nombre'])){
+      
+        $nombre = $_SESSION['nombre'];
+        $usuarioid = $_SESSION['iduser'];
+       $usuariorol= $_SESSION['roluser']; 
+      
+       /*echo $nombre;
+       echo $usuarioid;
+       echo $usuariorol;*/
+    }else{
+
+        header("location:../index.php"); 
+
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -72,7 +94,7 @@
 
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-    <a class="btn btn-danger" href="#" id="salir" role="button">Salir</a>
+    <a class="btn btn-danger" href="../controladores/cerrarSesion.php?cerrar=yes" id="salir" role="button">Salir</a>
     </li>
   </ul>
 </header>

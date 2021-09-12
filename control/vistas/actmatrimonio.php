@@ -1,5 +1,23 @@
 <?php
      include '../modelos/conector.php'; 
+      
+    //Iniciar una nueva sesión o reanudar la existente.
+    session_start();
+    //Si existe la sesión "cliente"..., la guardamos en una variable.
+    if (isset($_SESSION['nombre'])){
+      
+        $nombre = $_SESSION['nombre'];
+        $usuarioid = $_SESSION['iduser'];
+       $usuariorol= $_SESSION['roluser']; 
+
+      /* echo $nombre;
+       echo $usuarioid;
+       echo $usuariorol;*/
+    }else{
+
+        header("location:../index.php"); 
+
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -75,7 +93,7 @@
 
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-    <a class="btn btn-danger" href="#" id="salir" role="button">Salir</a>
+    <a class="btn btn-danger" href="../controladores/cerrarSesion.php?cerrar=yes"  id="salir" role="button">Salir</a>
     </li>
   </ul>
 </header>
@@ -335,7 +353,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Participante</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Sacramentado</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrar">
         <span data-feather="x"></span>
         </button>
@@ -429,7 +447,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Sacerdote</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Sacerdote</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrars">
         <span data-feather="x"></span>
         </button>
@@ -471,7 +489,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Padrino</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Padrino</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrarp">
         <span data-feather="x"></span>
         </button>

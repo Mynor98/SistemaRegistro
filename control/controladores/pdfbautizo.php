@@ -55,9 +55,9 @@
 
                  $consultapadres = " SELECT datpers.nombre as madre, dape.nombre as padre FROM sacramentados AS sacrament
                  LEFT JOIN persona AS person ON sacrament.Persona_idMadre = person.DatosPersona_idDatosPersona
-                 INNER JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
+                 LEFT JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
                  LEFT JOIN persona AS perso on sacrament.Persona_idPadre = perso.DatosPersona_idDatosPersona
-                 INNER JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
+                 LEFT JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
                  where  sacrament.idDatosPersona = $idSacra";
         
                             $resultpadres = mysqli_query($conn,$consultapadres);
@@ -199,13 +199,17 @@ $pdf->SetY(100);$pdf->Cell(107); $pdf->Cell(40,10,utf8_decode($aniosac));
 $pdf->SetY(100);
 $pdf->Cell(40,10,utf8_decode('fue batizado el_________de__________________de_________'));
 
-if(!empty($padre)) { $padress = $padre; } else { $padress = "- - - - - - - - - - - -"; }
-$pdf->SetY(108);$pdf->Cell(25);$pdf->Cell(40,10,utf8_decode($padress));
+if (!empty($padre)){ $espacioun = $padre;}else{$espacioun = $madre;} 
+
+$pdf->SetY(108);$pdf->Cell(17);$pdf->Cell(40,10,utf8_decode($espacioun));
 $pdf->SetY(108);
 $pdf->Cell(40,10,utf8_decode('hijo de______________________________________________'));
 
-if(!empty($madre)) { $madress = $madre; } else { $madress = "- - - - - - - - - - - -"; }
-$pdf->SetY(116);$pdf->Cell(25);$pdf->Cell(40,10,utf8_decode($madress));
+if ($espacioun == $madre){
+    $espaciodo = "- - - - - - - - - - - -";
+}else{$espaciodo = $madre ;}
+
+$pdf->SetY(116);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciodo));
 $pdf->SetY(116);
 $pdf->Cell(40,10,utf8_decode('y de________________________________________________'));
 
@@ -214,13 +218,13 @@ $pdf->Cell(40,10,utf8_decode('y de______________________________________________
 if(!empty($padrinou)) { $padrinovaci = $padrinou; } else { $padrinovaci = "- - - - - - - - - - - -"; }
     if($generop1 == "Masculino"){$escrito = "habiendo sido padrino__________________________________"; }
                           else{ $escrito="habiendo sido madrina__________________________________";}
-$pdf->SetY(124);$pdf->Cell(55);$pdf->Cell(40,10,utf8_decode($padrinovaci));
+$pdf->SetY(124);$pdf->Cell(46);$pdf->Cell(40,10,utf8_decode($padrinovaci));
 $pdf->SetY(124);
 $pdf->Cell(40,10,utf8_decode($escrito));
 
 
 if(!empty($padrinod)) { $padrinovacio = $padrinod; } else { $padrinovacio = "- - - - - - - - - - - -"; }
-$pdf->SetY(132);$pdf->Cell(10);$pdf->Cell(40,10,utf8_decode($padrinovacio));
+$pdf->SetY(132);$pdf->Cell(7);$pdf->Cell(40,10,utf8_decode($padrinovacio));
 $pdf->SetY(132);
 $pdf->Cell(40,10,utf8_decode('y___________________________________________________'));
 
@@ -305,9 +309,9 @@ $pdf->Output();
    
                     $consultapadressql = " SELECT datpers.nombre as madre, dape.nombre as padre FROM sacramentados AS sacrament
                     LEFT JOIN persona AS person ON sacrament.Persona_idMadre = person.DatosPersona_idDatosPersona
-                    INNER JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
+                    LEFT JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
                     LEFT JOIN persona AS perso on sacrament.Persona_idPadre = perso.DatosPersona_idDatosPersona
-                    INNER JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
+                    LEFT JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
                     where  sacrament.idDatosPersona = $idSacrament";
            
                                $resultpadressql = mysqli_query($conn,$consultapadressql);
@@ -464,25 +468,25 @@ $pdf->Cell(40,10,utf8_decode('Nació el_________________________________________
 
 
 if(!empty($nacimientosup)) { $nacimientovac = $nacimientosup; } else { $nacimientovac = "- - - - - - - - - - - -"; }
-$pdf->SetY(114); $pdf->SetX(80); $pdf->Cell(40,10,utf8_decode($nacimientovac));
+$pdf->SetY(114); $pdf->SetX(78); $pdf->Cell(40,10,utf8_decode($nacimientovac));
 $pdf->SetY(114);
 $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode('Originario(a) de_______________________________________'));
 
 if(!empty($vivesup)) { $vivevac = $vivesup; } else { $vivevac = "- - - - - - - - - - - -"; }
-$pdf->SetY(122); $pdf->SetX(76); $pdf->Cell(40,10,utf8_decode($vivevac));
+$pdf->SetY(122); $pdf->SetX(72); $pdf->Cell(40,10,utf8_decode($vivevac));
 $pdf->SetY(122);
 $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode('Vecino(a) de_________________________________________'));
 
-if(!empty($padresup)) { $padrevac = $padresup; } else { $padrevac = "- - - - - - - - - - - -"; }
-$pdf->SetY(130); $pdf->SetX(66); $pdf->Cell(40,10,utf8_decode($padrevac));
+if (!empty($padressup)){ $espacioun = $padresup;}else{$espacioun = $madresup;} 
+$pdf->SetY(130); $pdf->SetX(66); $pdf->Cell(40,10,utf8_decode($espacioun));
 $pdf->SetY(130);
 $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode('Hijo(a) de___________________________________________'));
 
-if(!empty($madresup)) { $madrevac = $madresup; } else { $madrevac = "- - - - - - - - - - - -"; }
-$pdf->SetY(138); $pdf->SetX(60); $pdf->Cell(40,10,utf8_decode($madrevac));
+if ($espacioun == $madresup){ $espaciodo = "- - - - - - - - - - - -";}else{$espaciodo = $madresup ;}
+$pdf->SetY(138); $pdf->SetX(58); $pdf->Cell(40,10,utf8_decode($espaciodo));
 $pdf->SetY(138);
 $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode('Y de_______________________________________________'));
@@ -494,7 +498,7 @@ $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode('Se procedió a testimoniar_______________________________'));
 
 if(!empty($edadsup)) { $edadvac = $edadsup; } else { $edadvac = "- - - - - - - - - - - -"; }
-$pdf->SetY(154); $pdf->SetX(153); $pdf->Cell(40,10,utf8_decode($edadvac));
+$pdf->SetY(154); $pdf->SetX(156); $pdf->Cell(40,10,utf8_decode($edadvac));
 $pdf->SetY(154);
 $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode('Que afirma que dicha persona fue bautizada a la edad de _____,'));
@@ -502,7 +506,7 @@ $pdf->Cell(40,10,utf8_decode('Que afirma que dicha persona fue bautizada a la ed
 if(!empty($padrinou)) { $padrinovac = $padrinou; } else { $padrinovac = "- - - - - - - - - - - -"; }
 if($generosup == "Masculino"){$escritoo = "en esta Parroquia. Siendo su padrino______________________"; }
                           else{ $escritoo="en esta Parroquia. Siendo su madrina______________________";}
-$pdf->SetY(162); $pdf->SetX(120); $pdf->Cell(40,10,utf8_decode($padrinovac));
+$pdf->SetY(162); $pdf->SetX(118); $pdf->Cell(40,10,utf8_decode($padrinovac));
 $pdf->SetY(162);
 $pdf->SetX(44);
 $pdf->Cell(40,10,utf8_decode($escritoo));
@@ -547,10 +551,10 @@ $pdf->Output();
 
         }
     }else{
-        echo "<script> 
+       /* echo "<script> 
         alert('Error! debe especificar el Sacerdote encargado.'); 
         window.location.href='../vistas/principalbautizo.php'; 
-        </script>"; 
+        </script>"; */
     }
 
 ?>

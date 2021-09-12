@@ -67,9 +67,9 @@
 
                  $consultapadres = " SELECT datpers.nombre as madre, dape.nombre as padre FROM sacramentados AS sacrament
                  LEFT JOIN persona AS person ON sacrament.Persona_idMadre = person.DatosPersona_idDatosPersona
-                 INNER JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
+                 LEFT JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
                  LEFT JOIN persona AS perso on sacrament.Persona_idPadre = perso.DatosPersona_idDatosPersona
-                 INNER JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
+                 LEFT JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
                  where  sacrament.idDatosPersona = $idSacra";
         
                             $resultpadres = mysqli_query($conn,$consultapadres);
@@ -216,13 +216,15 @@ $pdf->Cell(40,10,utf8_decode('nacido el__________de____________________de_______
 
 
 
-if(!empty($padre)) { $padress = $padre; } else { $padress = "- - - - - - - - - - - -"; }
-$pdf->SetY(108);$pdf->Cell(25);$pdf->Cell(40,10,utf8_decode($padress));
+if (!empty($padre)){ $espacioun = $padre;}else{$espacioun = $madre;}
+$pdf->SetY(108);$pdf->Cell(16);$pdf->Cell(40,10,utf8_decode($espacioun));
 $pdf->SetY(108);
 $pdf->Cell(40,10,utf8_decode('hijo de______________________________________________'));
 
-if(!empty($madre)) { $madress = $madre; } else { $madress = "- - - - - - - - - - - -"; }
-$pdf->SetY(116);$pdf->Cell(25);$pdf->Cell(40,10,utf8_decode($madress));
+if ($espacioun == $madre){
+    $espaciodo = "- - - - - - - - - - - -";
+}else{$espaciodo = $madre ;}
+$pdf->SetY(116);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciodo));
 $pdf->SetY(116);
 $pdf->Cell(40,10,utf8_decode('y de________________________________________________'));
 
@@ -239,11 +241,13 @@ $pdf->SetY(132);$pdf->Cell(104); $pdf->Cell(40,10,utf8_decode($aniosac));
 $pdf->SetY(132);
 $pdf->Cell(40,10,utf8_decode('El dia____________de___________________del___________'));
 
-$pdf->SetY(140);$pdf->Cell(40); $pdf->Cell(40,10,utf8_decode($sacnombre));
+if(!empty($sacnombre)){$espsac = $sacnombre;}else{$espsac = "- - - - - - - - - - - -";}
+$pdf->SetY(140);$pdf->Cell(40); $pdf->Cell(40,10,utf8_decode($espsac));
 $pdf->SetY(140);
 $pdf->Cell(40,10,utf8_decode('Firma el Sacerdote____________________________________'));
 
-$pdf->SetY(148);$pdf->Cell(50); $pdf->Cell(40,10,utf8_decode($catequista));
+if(!empty($catequista)){$espcat = $catequista;}else{$espcat = "- - - - - - - - - - - -";}
+$pdf->SetY(148);$pdf->Cell(50); $pdf->Cell(40,10,utf8_decode($espcat));
 $pdf->SetY(148);
 $pdf->Cell(40,10,utf8_decode('Catequista Responsable________________________________'));
 
@@ -277,8 +281,7 @@ $pdf->Cell(100,6,'Tel: 7945-1180 Correo: scparroquia.guastatoya@gmail.com',1,0,'
 $pdf->Output();
 
         }else{
-
-            
+                
             $consu = "SELECT reg.idRegistro as idreg, reg.noLibro, reg.noFolio,reg.fechaSacramento as fechasac, sac.fechaNacimiento as fechana,sac.lugarNacimiento ,dtp.nombre as catequista,
             sacra.nombreSacramentos as sacramento , sac.nombre,sac.genero,dper.nombre as padrino1,dpers.nombre as padrino2, dper.genero as gpad1, dpers.genero as gpad2,
             reg.alMargen, reg.supletoria,reg.Sacramentados_idDatosPersona as idsacra, dperso.nombre as sacer from registro as reg
@@ -304,7 +307,7 @@ $pdf->Output();
                 $linead= mysqli_fetch_array($resul);
            
                       $idSacra = $linead['idsacra'];
-        
+      
                         $consusac = "SELECT dper.nombre, per.tipoSacerdote from persona as per 
                          INNER JOIN datospersona as dper on per.DatosPersona_idDatosPersona = dper.idDatosPersona
                          WHERE per.idPersona = $sacerdote";
@@ -314,9 +317,9 @@ $pdf->Output();
         
                          $consultapadres = " SELECT datpers.nombre as madre, dape.nombre as padre FROM sacramentados AS sacrament
                          LEFT JOIN persona AS person ON sacrament.Persona_idMadre = person.DatosPersona_idDatosPersona
-                         INNER JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
+                         LEFT JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
                          LEFT JOIN persona AS perso on sacrament.Persona_idPadre = perso.DatosPersona_idDatosPersona
-                         INNER JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
+                         LEFT JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
                          where  sacrament.idDatosPersona = $idSacra";
                 
                                     $resultpadres = mysqli_query($conn,$consultapadres);
@@ -328,6 +331,7 @@ $pdf->Output();
         
                 $madre = $lineapadres['madre'];
                 $padre = $lineapadres['padre'];
+               
                 $libro = $linead['noLibro'];
                 $folio = $linead['noFolio'];
                 $noms = $linead['nombre'];
@@ -414,9 +418,11 @@ $pdf->Output();
             $this->SetX(54); 
             $this->Cell(100,6,'Tel: 7945-1180 Correo: scparroquia.guastatoya@gmail.com',1,0,'C');
             //$this->Cell(0,10,utf8_decode('Párroco'),0,0,'');*/
+            
         }
+
         }
-        
+    
         $pdf = new PDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial','',12);
@@ -434,7 +440,7 @@ $pdf->Output();
         if(!empty($fechasac)) { $diasac = $diasc; $sacramentovac = $sacramentomes; $aniosac=$aniosc; } 
         else { $diasac = "- - -"; $sacramentovac = "- - -"; $aniosac="- - -"; }
         $pdf->SetY(100);$pdf->Cell(17); $pdf->Cell(40,10,utf8_decode($diasac));
-        $pdf->SetY(100);$pdf->Cell(41); $pdf->Cell(40,10,utf8_decode($sacramentovac));
+        $pdf->SetY(100);$pdf->Cell(37); $pdf->Cell(40,10,utf8_decode($sacramentovac));
         $pdf->SetY(100);$pdf->Cell(70); $pdf->Cell(40,10,utf8_decode($aniosac));
                 
         $pdf->SetY(92);
@@ -442,12 +448,13 @@ $pdf->Output();
         $pdf->SetY(100);
         $pdf->Cell(40,10,utf8_decode('el dia________de____________de_______, en esta Parroquia.'));
       
-        
-        $pdf->SetY(108);$pdf->Cell(43); $pdf->Cell(40,10,utf8_decode($sacerd));
+        if(!empty($sacerd)){$saceresp = $sacerd;}else{$saceresp = "- - - - - - - - - - - -";}
+        $pdf->SetY(108);$pdf->Cell(43); $pdf->Cell(40,10,utf8_decode($saceresp));
         $pdf->SetY(108);
         $pdf->Cell(40,10,utf8_decode('Celebró el Sacerdote__________________________________'));
         
-        $pdf->SetY(116);$pdf->Cell(50); $pdf->Cell(40,10,utf8_decode($catequista));
+        if(!empty($catequista)){$catesp = $catequista;}else{$catesp = "- - - - - - - - - - - -";}
+        $pdf->SetY(116);$pdf->Cell(50); $pdf->Cell(40,10,utf8_decode($catesp));
         $pdf->SetY(116);
         $pdf->Cell(40,10,utf8_decode('Catequista Responsable_______________________________'));
         
@@ -480,12 +487,12 @@ $pdf->Output();
         
         $pdf->Output();
 
-
         }
+        
     }else{
         echo "<script> 
         alert('Error! debe especificar el Sacerdote encargado.'); 
-        window.location.href='../vistas/principalbautizo.php'; 
+        window.location.href='../vistas/principalcomunion.php'; 
         </script>"; 
     }
     

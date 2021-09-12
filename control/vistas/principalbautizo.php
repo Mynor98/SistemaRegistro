@@ -1,6 +1,22 @@
 <?php
      include '../modelos/conector.php';      
     
+     session_start();
+     //Si existe la sesión "cliente"..., la guardamos en una variable.
+     if (isset($_SESSION['nombre'])){
+      
+         $nombre = $_SESSION['nombre'];
+         $usuarioid = $_SESSION['iduser'];
+        $usuariorol= $_SESSION['roluser']; 
+ 
+       /* echo $nombre;
+        echo $usuarioid;
+        echo $usuariorol;*/
+     }else{
+ 
+         header("location:../index.php"); 
+ 
+     }
 ?>
 <!doctype html>
 <html lang="en">
@@ -81,7 +97,7 @@
 
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-    <a class="btn btn-danger" href="#" id="salir" role="button">Salir</a>
+    <a class="btn btn-danger" href="../controladores/cerrarSesion.php?cerrar=yes"  id="salir" role="button">Salir</a>
     </li>
   </ul>
 </header>
@@ -246,14 +262,14 @@
                           <td><?php echo $row['nombre'] ?></td>
                           <td><?php echo $row['noLibro'] ?></td>
                           <td><?php echo $row['noFolio'] ?></td>
-                          <td><?php echo $row['noSupletoria'] ?></td>
-                          <td><?php echo $row['fechaSacramento'] ?></td>
-                         <td><?php echo $row['edadSacramento'] ?></td>
+                          <td> <?php if(!empty($row['noSupletoria'])){echo $row['noSupletoria'];}else{ echo "No aplica";} ?></td>
+                          <td><?php if(!empty($row['fechaSacramento'])){echo $row['fechaSacramento'];}else{ echo "No ingresado";} ?></td>
+                         <td><?php if(!empty($row['edadSacramento'])){echo $row['edadSacramento'];}else{ echo "No ingresado";} ?></td>
                          
                           
                           <td><?php echo $row['padrino1'] ?></td>
-                          <td><?php echo $row['padrino2'] ?></td>
-                          <td><?php echo $row['alMargen'] ?></td>
+                          <td><?php if(!empty($row['padrino2'])){echo $row['padrino2'];}else{ echo "No ingresado";} ?></td>
+                          <td><?php  if(!empty($row['alMargen'])){echo $row['alMargen'];}else{ echo "No ingresado";} ?></td>
                          
                         
                           
@@ -319,7 +335,7 @@
       </div>
       <div class="modal-body">
               <form target="_blank" action="../controladores/pdfbautizo.php" method="POST">
-      <input type="text"  class="form-control" id="idbau" placeholder="" name="idbautizo">
+      <input type="text" hidden class="form-control" id="idbau" placeholder="" name="idbautizo">
             
                           <label for="inputAddress">Seleccionar nombre del Sacerdote encargado:</label>
                       <select class="form-select" aria-label="Default select example" name="sacerdote">

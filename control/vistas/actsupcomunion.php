@@ -1,5 +1,22 @@
 <?php
      include '../modelos/conector.php'; 
+
+     session_start();
+     //Si existe la sesión "cliente"..., la guardamos en una variable.
+     if (isset($_SESSION['nombre'])){
+      
+         $nombre = $_SESSION['nombre'];
+         $usuarioid = $_SESSION['iduser'];
+        $usuariorol= $_SESSION['roluser']; 
+ 
+       /* echo $nombre;
+        echo $usuarioid;
+        echo $usuariorol;*/
+     }else{
+ 
+         header("location:../index.php"); 
+ 
+     }
 ?>
 <!doctype html>
 <html lang="en">
@@ -75,7 +92,7 @@
 
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-    <a class="btn btn-danger" href="#" id="salir" role="button">Salir</a>
+    <a class="btn btn-danger" href="../controladores/cerrarSesion.php?cerrar=yes"  id="salir" role="button">Salir</a>
     </li>
   </ul>
 </header>
@@ -187,7 +204,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Nombre de quien recibio el sacramento:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorn" style="width: 60%" name="sacramentado">
+                    	<select id="buscadorn" style="width: 92%" name="sacramentado">
                       <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
@@ -214,7 +231,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Sacerdote:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpd" style="width: 60%" name="sacerdote">
+                    	<select id="buscadorpd" style="width: 84.5%" name="sacerdote">
                       <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
@@ -239,7 +256,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Catequista:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpdd" style="width: 60%" ="catequista" name="catequista">
+                    	<select id="buscadorpdd" style="width: 84.5%" ="catequista" name="catequista">
                       <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
@@ -292,7 +309,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Participante</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Sacramentado</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrar">
         <span data-feather="x"></span>
         </button>
@@ -383,7 +400,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Sacerdote</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Sacerdote</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrars">
         <span data-feather="x"></span>
         </button>
@@ -427,7 +444,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Catequista</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Catequista</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrarc">
         <span data-feather="x"></span>
         </button>

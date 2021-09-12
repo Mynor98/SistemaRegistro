@@ -1,6 +1,22 @@
 <?php
-     include '../modelos/conector.php';      
+     include '../modelos/conector.php';  
+
+     session_start();
+     //Si existe la sesión "cliente"..., la guardamos en una variable.
+     if (isset($_SESSION['nombre'])){
      
+         $nombre = $_SESSION['nombre'];
+         $usuarioid = $_SESSION['iduser'];
+        $usuariorol= $_SESSION['roluser']; 
+ 
+       /* echo $nombre;
+        echo $usuarioid;
+        echo $usuariorol;*/
+     }else{
+ 
+         header("location:../index.php"); 
+ 
+     }
      
 
 ?>
@@ -82,7 +98,7 @@
 
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-    <a class="btn btn-danger" href="#" id="salir" role="button">Salir</a>
+    <a class="btn btn-danger" href="../controladores/cerrarSesion.php?cerrar=yes"  id="salir" role="button">Salir</a>
     </li>
   </ul>
 </header>
@@ -264,7 +280,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Padrino</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Padrino</h5>
         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
         <span data-feather="x"></span>
         </button>
@@ -305,8 +321,8 @@
 <div class="modal fade" id="modalmodificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Padrino</u></h5>
+      <div class="modal-header" style="background-color: #FFCE54;">
+        <h5 class="modal-title" id="exampleModalLongTitle">Editar Padrino</h5>
         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
         <span data-feather="x"></span>
         </button>
@@ -325,7 +341,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Modificar</button>
+        <button type="submit" class="btn btn-warning">Editar</button>
       </div>
       </form>
     </div>

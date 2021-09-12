@@ -1,5 +1,26 @@
 <?php
      include '../modelos/conector.php'; 
+
+    
+    //Iniciar una nueva sesión o reanudar la existente.
+    session_start();
+    //Si existe la sesión "cliente"..., la guardamos en una variable.
+    if (isset($_SESSION['nombre'])){
+      
+      $nombre = $_SESSION['nombre'];
+        $usuarioid = $_SESSION['iduser'];
+       $usuariorol= $_SESSION['roluser']; 
+
+     /*  echo $nombre;
+       echo $usuarioid;
+       echo $usuariorol;*/
+    }else{
+
+        header("location:../index.php"); 
+
+    }
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -75,7 +96,7 @@
 
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-    <a class="btn btn-danger" href="#" id="salir" role="button">Salir</a>
+    <a class="btn btn-danger" href="../controladores/cerrarSesion.php?cerrar=yes"  id="salir" role="button">Salir</a>
     </li>
   </ul>
 </header>
@@ -159,9 +180,7 @@
 
     <main id="main" class="col-xs-9 ms-sm-auto col-lg-10 px-md-4">
     
-    <div class="container col-lg-6" style=" background-color: white; padding-top: 20px; padding-bottom: 20px; border-radius: 20px;" >
-        <div class ="row">
-          <div class="col-lg-12">
+    <div  id="contenedorform">
 
               <h3>Registro de bautizo</h3>
              <hr>
@@ -187,7 +206,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Nombre de quien recibió el sacramento:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorn" style="width: 60%" name="sacramentado">
+                    	<select id="buscadorn" style="width: 84.80%" name="sacramentado">
                         <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
@@ -213,7 +232,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Padrino #1:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpd" style="width: 60%" name="padrinou">
+                    	<select id="buscadorpd" style="width: 86.5%" name="padrinou">
                         
                         <option value="0" selected  >Buscar nombre</option>
                         <?php
@@ -242,7 +261,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Padrino #2:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadorpdd" style="width: 60%" name="padrinod">
+                    	<select id="buscadorpdd" style="width: 86.5%" name="padrinod">
                       <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
@@ -269,7 +288,7 @@
                   <div class="input-group col-md-12">
                       <label for="inputAddress">Seleccionar Sacerdote quien Bautizó:</label>
                       <span class="input-group"></span>
-                    	<select id="buscadors" style="width: 60%" name="sacerdoteb">
+                    	<select id="buscadors" style="width: 84.80%" name="sacerdoteb">
                       <option value="0" selected  >Buscar nombre</option>
                         <?php
                        
@@ -313,9 +332,7 @@
 
       </div>
 
-      </div>
       
-      </div>
 
     </main>
     
@@ -328,7 +345,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Participante</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Sacramentado</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrar">
         <span data-feather="x"></span>
         </button>
@@ -425,7 +442,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Padrino</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Padrino</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrarp">
         <span data-feather="x"></span>
         </button>
@@ -464,7 +481,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><u>Registrar Sacerdote</u></h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Registrar Sacerdote</h5>
         <button type="button" class="btn btn-danger btn-sm" id="btncerrars">
         <span data-feather="x"></span>
         </button>

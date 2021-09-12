@@ -17,6 +17,11 @@
             $consulta ="SELECT * FROM usuario WHERE usuario = '$usuario'";
             $ejecutar=mysqli_query($conn,$consulta) or die(mysli_error($conn));
 
+            $consulcorreo ="SELECT * FROM usuario WHERE correo = '$correo'";
+            $ejsql=mysqli_query($conn,$consulcorreo) or die(mysli_error($conn));
+         
+                if(mysqli_num_rows($ejsql) == 0){
+
             if (mysqli_num_rows($ejecutar) != 0){
 
                 echo "<script> 
@@ -64,8 +69,13 @@
             }
         
         
-            
-            
+            }{
+        echo "<script> 
+            alert('El correo ya existe, por favor probar con uno nuevo.'); 
+            window.location.href='../vistas/principalusuarios.php'; 
+            </script>"; 
+    }
+          
 
         }else{
             echo "<script> 
@@ -74,6 +84,6 @@
             </script>"; 
         } 
 
-
+    
 
 ?>

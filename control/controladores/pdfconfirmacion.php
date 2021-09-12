@@ -68,9 +68,9 @@
    
                     $consultapadres = " SELECT datpers.nombre as madre, dape.nombre as padre FROM sacramentados AS sacrament
                     LEFT JOIN persona AS person ON sacrament.Persona_idMadre = person.DatosPersona_idDatosPersona
-                    INNER JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
+                    LEFT JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
                     LEFT JOIN persona AS perso on sacrament.Persona_idPadre = perso.DatosPersona_idDatosPersona
-                    INNER JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
+                    LEFT JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
                     where  sacrament.idDatosPersona = $idSacra";
            
                                $resultpadres = mysqli_query($conn,$consultapadres);
@@ -205,13 +205,15 @@
    
    //$pdf->Cell(40,10,utf8_decode('Originario(a) de_______________________________________'));
    
-   if(!empty($padre)) { $padress = $padre; } else { $padress = "- - - - - - - - - - - -"; }
-   $pdf->SetY(92);$pdf->Cell(25);$pdf->Cell(40,10,utf8_decode($padress));
+   if (!empty($padre)){ $espacioun = $padre;}else{$espacioun = $madre;} 
+   $pdf->SetY(92);$pdf->Cell(17);$pdf->Cell(40,10,utf8_decode($espacioun));
    $pdf->SetY(92);
    $pdf->Cell(40,10,utf8_decode('hijo de______________________________________________'));
    
-   if(!empty($madre)) { $madress = $madre; } else { $madress = "- - - - - - - - - - - -"; }
-   $pdf->SetY(100);$pdf->Cell(25);$pdf->Cell(40,10,utf8_decode($madress));
+   if ($espacioun == $madre){
+    $espaciodo = "- - - - - - - - - - - -";
+    }else{$espaciodo = $madre ;}
+   $pdf->SetY(100);$pdf->Cell(14);$pdf->Cell(40,10,utf8_decode($espaciodo));
    $pdf->SetY(100);
    $pdf->Cell(40,10,utf8_decode('y de________________________________________________'));
    
@@ -238,8 +240,8 @@
    $pdf->SetY(116);
    $pdf->Cell(40,10,utf8_decode($confir.' el dia________de______________del________'));
    
-   
-   $pdf->SetY(124);$pdf->Cell(50); $pdf->Cell(40,10,utf8_decode($obispo));
+   if(!empty($obispo)){$espob = $obispo;}else{$espob = "- - - - - - - - - - - -";}
+   $pdf->SetY(124);$pdf->Cell(50); $pdf->Cell(40,10,utf8_decode($espob));
    $pdf->SetY(124);
    $pdf->Cell(40,10,utf8_decode('Por el Excmo. Monseñor________________________________'));
    
@@ -250,7 +252,8 @@
    $pdf->SetY(132);
    $pdf->Cell(40,10,utf8_decode('habiendo sido '.$textp.'_________________________________'));
 
-   $pdf->SetY(140);$pdf->Cell(6); $pdf->Cell(40,10,utf8_decode($padrinod));
+   if(!empty($padrinod)){$esppad = $padrinod;}else{$esppad = "- - - - - - - - - - - -";}
+   $pdf->SetY(140);$pdf->Cell(6); $pdf->Cell(40,10,utf8_decode($esppad));
    $pdf->SetY(140);
    $pdf->Cell(40,10,utf8_decode('y___________________________________________________'));
    
@@ -321,9 +324,9 @@
            
                             $consultapadres = " SELECT datpers.nombre as madre, dape.nombre as padre FROM sacramentados AS sacrament
                             LEFT JOIN persona AS person ON sacrament.Persona_idMadre = person.DatosPersona_idDatosPersona
-                            INNER JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
+                            LEFT JOIN datospersona AS datpers ON person.DatosPersona_idDatosPersona = datpers.idDatosPersona
                             LEFT JOIN persona AS perso on sacrament.Persona_idPadre = perso.DatosPersona_idDatosPersona
-                            INNER JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
+                            LEFT JOIN datospersona AS dape ON perso.DatosPersona_idDatosPersona = dape.idDatosPersona
                             where  sacrament.idDatosPersona = $idSacra";
                    
                                        $resultpadres = mysqli_query($conn,$consultapadres);
@@ -455,13 +458,13 @@
                 $pdf->SetY(104);
                 $pdf->Cell(40,10,utf8_decode('nació el___________de____________________de__________'));
 
-                 if(!empty($lugnac)){$lugnacv = $lugnac; }else{$lugnacv = "--------------"; }
+                 if(!empty($lugnac)){$lugnacv = $lugnac; }else{$lugnacv = "- - - - - - - - - - - -"; }
            $pdf->SetY(112);$pdf->Cell(35);$pdf->Cell(40,10,utf8_decode($lugnacv));
            $pdf->SetY(112);
            
            $pdf->Cell(40,10,utf8_decode('Originario(a) de_______________________________________'));
 
-           if(!empty($lugvive)){$lugvivev = $lugvive; }else{$lugvivev = "--------------"; }
+           if(!empty($lugvive)){$lugvivev = $lugvive; }else{$lugvivev = "- - - - - - - - - - - -"; }
            $pdf->SetY(120);$pdf->Cell(28);$pdf->Cell(40,10,utf8_decode($lugvivev));
            $pdf->SetY(120);
            
@@ -475,15 +478,15 @@
        $pdf->Cell(40,10,utf8_decode('hijo(a)______________________________________________'));
        
        if ($espaciou != $madre){
-           if (!empty($madre)){$espaciod = $madre ;}else{$espaciod = "-------------------"; }
-       }else{$espaciod = "-------------------";}
+           if (!empty($madre)){$espaciod = $madre ;}else{$espaciod = "- - - - - - - - - - - -"; }
+       }else{$espaciod = "- - - - - - - - - - - -";}
        
        $pdf->SetY(136);$pdf->Cell(13);$pdf->Cell(40,10,utf8_decode($espaciod));
        $pdf->SetY(136);
        $pdf->Cell(40,10,utf8_decode('y de________________________________________________'));
 
 
-       if(!empty($testigo)){$testigovac = $testigo;}else{$testigovac = "-----------------";}
+       if(!empty($testigo)){$testigovac = $testigo;}else{$testigovac = "- - - - - - - - - - - -";}
        $pdf->SetY(144);$pdf->Cell(51);$pdf->Cell(40,10,utf8_decode($testigovac));
        $pdf->SetY(144);
        $pdf->Cell(40,10,utf8_decode('Se procedió a testimoniar_______________________________'));
@@ -560,7 +563,7 @@
        }else{
            echo "<script> 
            alert('Error! debe especificar el Sacerdote encargado.'); 
-           window.location.href='../vistas/principalbautizo.php'; 
+           window.location.href='../vistas/principalconfir.php'; 
            </script>"; 
        }
 ?>

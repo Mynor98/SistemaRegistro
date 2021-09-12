@@ -11,13 +11,13 @@
 <body>
    
 
-    <form class="form-signin" action="index.php">
+    <form class="form-signin" action="../controladores/validacionLogin.php" method="POST">
         <img class="mb-4" src="img/logo.png" alt="" width="45%" height="45%">
         <h1 class="h4 mb-3 font-weight-normal">Iniciar sesión</h1>
        
-        <input type="email" id="inputEmail" class="form-control" placeholder="Correo" required autofocus>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Correo" required autofocus name="correo">
        
-        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required name="contrasenia">
     
         <div class="d-grid gap-2">
         <button class="btn btn-primary" type="submit">Iniciar</button>
