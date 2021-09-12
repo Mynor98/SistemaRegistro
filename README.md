@@ -1,4 +1,4 @@
-#Repositorio oficial del sistema de registro de actas para sacramentos
+<h1>Repositorio oficial del sistema de registro de actas para sacramentos </h1>
 
 Este es un proyecto de tesis para la universidad Mariano Gálvez de Guatemala
 
