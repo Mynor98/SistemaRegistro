@@ -95,7 +95,7 @@
   <br>
   <ul class="navbar-nav px-3 ">
     <li class="nav-item text-nowrap">
-      <span id="usuario"> Hola Mynor velásquez</span>
+      <span id="usuario"> <?php echo $nombre; ?></span>
     </li>
   </ul>
 

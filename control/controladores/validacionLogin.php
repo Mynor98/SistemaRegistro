@@ -17,21 +17,20 @@ echo $contrasenia;
 */
 
 
-   $consulta ="SELECT idUsuario,usuario, correo, contrasenia,estado,Rol_idRol FROM usuario WHERE correo = '$correo'";
+   $consulta ="SELECT idUsuario,nombre, correo, contrasenia,estado,Rol_idRol FROM usuario WHERE correo = '$correo'";
             $ejecutar=mysqli_query($conn,$consulta) or die(mysli_error($conn));
             $array = mysqli_fetch_array($ejecutar);
            
             if(!is_null($array)){
                 
                 $userid = $array['idUsuario'];
-                $user = $array['usuario'];
+                $user = $array['nombre'];
                 $correobd = $array['correo'];
                 $contrabd = $array['contrasenia'];
                 $estado = $array['estado'];
                 $userrol = $array['Rol_idRol'];
-                
-                
-                if($estado == 1){
+  
+             if($estado == 1){
 
                     if (password_verify($contrasenia, $contrabd)) {
                        
@@ -43,8 +42,6 @@ echo $contrasenia;
                          $_SESSION['roluser'] = $userrol;
 
                                 header("location:../vistas/index.php"); 
-
-                    
                     
                     } else {
                         
@@ -52,33 +49,19 @@ echo $contrasenia;
                         alert('Correo o contraseña incorrectos. Verificar los datos ingresados.'); 
                         window.location.href='../vistas/login.php'; 
                         </script>"; 
-
-
-
-
-                    }
-                    
-
-
+                    }              
                 }else{
 
                     echo "<script> 
                 alert('El usuario se encuentra desactivado, comunicarse con administración.'); 
                 window.location.href='../vistas/login.php'; 
                 </script>"; 
-
-                }
-
-
-
-                    
+                }           
             }else{
-
                   echo "<script> 
                 alert('El usuario no existe, comunicarse con administración.'); 
                 window.location.href='../vistas/login.php'; 
                 </script>"; 
-        
             }
             
            

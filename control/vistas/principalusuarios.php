@@ -90,7 +90,7 @@
   <br>
   <ul class="navbar-nav px-3 ">
     <li class="nav-item text-nowrap">
-      <span id="usuario"> Hola Mynor velásquez</span>
+      <span id="usuario"> <?php echo $nombre; ?></span>
     </li>
   </ul>
 
@@ -240,9 +240,27 @@
         data-use="<?php echo $row['usuario']  ?>" data-corr="<?php echo $row['correo']  ?>">
         <span data-feather="edit-3">
         </button>
+
+
+
+        <div style=" width: 5px;"></div>
+
+        <div class="btn-group mr-2" role="group" aria-label="Third group">
+        <button type="button" id="btneliminar" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#meliminar"
+        data-ide="<?php echo $row['idUsuario']  ?>">
+        <span data-feather="delete">
+        </button>
+          </div>  
+          
+
+
+
+
+
+
             </div>
 
-    
+            </td> 
 </div>    
 
 
@@ -377,6 +395,46 @@
 </div>
 
 
+
+
+
+
+    
+<!-- Modal eliminar -->
+<div class="modal fade" id="meliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Advertencia!</h5>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <span data-feather="x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../controladores/eliminarUsuario.php" method="POST">
+      <input type="text" hidden class="form-control" id="saceeliminar" placeholder="Nombre" name="iduser">
+        <center>
+        <h6>¿Está seguro que desea eliminar el usuario?</h6>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -397,6 +455,18 @@
     $("#user").val(usuario);
     $("#correo").val(correo);
 
+  })
+
+
+
+
+
+  $(document).on("click", "#btneliminar", function (){
+    var ideace =$(this).data('ide');
+ 
+    $("#saceeliminar").val(ideace);
+  
+     
   })
 
 
