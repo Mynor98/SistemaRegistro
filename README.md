@@ -32,7 +32,7 @@ Una vez creada la base de datos en MySQL el sistema esta listo para ser usado.
 
 <h2> Paso #4 </h2>
 
-Para acceder al sistema de manera local, abrimos el navegador de nunestra preferencia y colocamos la siguiente ruta en nuestro navegador:
+Para acceder al sistema de manera local, abrimos el navegador de nuestra preferencia y colocamos la siguiente ruta en nuestro navegador:
 
 > > https://localhost/SistemaRegistro/control
 
