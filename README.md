@@ -24,11 +24,13 @@ si estas usando algún otro debes de colocarlo en la carpeta correspondiente par
 
 <h2> Paso #3 </h2>
 
-Actualmente el sistema no va a funcionar debido que aún no está creada la base de datos, para eso debemos de dirigirnos a los archivos del sistema y encontraremos un archivo llamado registros.sql este archivo contiene el script correspondiente para la creación de la base de datos.
+Actualmente el sistema no va a funcionar debido que aún no está creada la base de datos, para eso debemos de dirigirnos a los archivos del sistema y encontraremos un archivo llamado registroiglesia.sql este archivo contiene el script correspondiente para la creación de la base de datos.
 
-Nos dirigimos hacia PhpMyadmin y seleccionamos el apartado importar, cuando estemos en el apartado, presionamos el botón de seleccionar archivo, seleccionamos el archivo antes mencionado llamado registros.sql lo cargamos y presionamos continuar y se creará la base de datos en MySQL.
+Nos dirigimos hacia PhpMyadmin y ddel lado izquierdo encontraremos nueva base de dados y seleccionamos esa opción, cuando estemos en el apartado, colocamos el nombre de la base de datos a crear, el cual seria "registroiglesia" y el tipo de base de datos, colocamos utf8_general_ci. Seguido precionamos el boton crear y se creara la base de datos que necesitamos. Luego seleccionamos la nueva base de datos y nos vamos al apartado de importar, presionamos el botón de seleccionar archivo, seleccionamos el archivo antes mencionado llamado registroiglesia.sql lo cargamos y presionamos continuar y se creará la base de datos en MySQL.
 
 Una vez creada la base de datos en MySQL el sistema esta listo para ser usado.
+
+<h2> Paso #4 </h2>
 
 para acceder al sistema de manera local, abrimos el navegador de nunestra preferencia y colocamos la siguiente ruta en nuestro navegador:
 
