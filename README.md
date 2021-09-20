@@ -10,7 +10,7 @@ Inicialmente si deseas utilizar el sistema de registro de sacramentos, debes de 
 
 Como primer paso debes de instalar algún servidor local que cuente con Php versión 8.0.7 o superior y MySQL con PhpMyadmin. recomiendo que utilices Xampp por la facilidad de la instalación. A continuación, un link de descarga:
 
-> > http://https://www.apachefriends.org/download.html
+> > https://www.apachefriends.org/download.html
 
 Puedes descargarlo para el sistema operativo que utilices, sea Windows, OS o Linux.
 
