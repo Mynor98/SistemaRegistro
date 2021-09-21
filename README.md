@@ -4,7 +4,19 @@ Este es un proyecto de tesis para la universidad Mariano Gálvez de Guatemala
 
 ![](https://in3.umg.edu.gt/images/logoumg2.png)
 
-Inicialmente si deseas utilizar el sistema de registro de sacramentos, debes de seguir los siguientes pasos:
+<h2>Prueba en linea</h2>
+Para utilizarlo en línea, copiar el siguiente enlace en tu navegador:       
+
+https://registroparroquia.tcsogt.com/vistas/login.php
+
+<h4>Las credenciales son las siguientes:</h4>
+
+correo: velasquezmynor.1998@gmail.com 
+
+contraseña: Admin123*
+
+
+<h2>Instalación de manera local</h2>
 
 <h2> Paso #1 </h2>
 
