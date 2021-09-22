@@ -164,12 +164,20 @@
               Catequistas
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="principalusuarios.php">
-              <span data-feather="user"></span>
+
+          <?php
+          
+          if( $usuariorol== 1){
+            echo "
+          <li class='nav-item'>
+            <a class='nav-link' href='principalusuarios.php'>
+              <span data-feather='user'></span>
               Usuarios
             </a>
-          </li>
+          </li>";
+        }
+          ?>
+
         </ul>
       </div>
     </nav>

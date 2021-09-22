@@ -172,12 +172,20 @@
               Catequistas
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="principalusuarios.php">
-              <span data-feather="user"></span>
+
+          <?php
+          
+          if( $usuariorol== 1){
+            echo "
+          <li class='nav-item'>
+            <a class='nav-link' href='principalusuarios.php'>
+              <span data-feather='user'></span>
               Usuarios
             </a>
-          </li>
+          </li>";
+        }
+          ?>
+
         </ul>
       </div>
     </nav>
@@ -196,9 +204,13 @@
             <h3>Sacramentados</h3>
             <div style="width: 10px;"></div>
             <div class="btn-group mr-2" role="group" aria-label="Third group">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalsac">
-             <span data-feather="user-plus"></span> Registrar Sacramentado
-            </button>
+            <?php 
+                if($usuariorol == 1 || $usuariorol == 2){
+            echo "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#modalsac'>
+             <span data-feather='user-plus'></span> Registrar Sacramentado
+            </button>";
+          }
+          ?>
                 </div>
 
     
@@ -218,7 +230,11 @@
       <th scope="col">Lugar donde vive Actualmente</th>
       <th scope="col">Padre</th>
       <th scope="col">Madre</th>
-      <th scope="col">Acciones</th>
+      <?php 
+                if($usuariorol == 1 || $usuariorol == 2){
+     echo "<th scope='col'>Acciones</th>";
+    }
+    ?>
     </tr>
   </thead>
   <tbody>
@@ -254,29 +270,31 @@
                 <td><?php echo $row['nomm'] ?></td>
                
                 
-      
-      <td> 
-      <div class="btn-toolbar" >
+                <?php 
+                if($usuariorol == 1 || $usuariorol == 2){
+      echo"<td> 
+      <div class='btn-toolbar' >
 
-        <div class="btn-group mr-2" role="group" aria-label="Third group">
-        <button type="button" id="btnmodalsac" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalmodificar" 
-        data-id="<?php echo $row['idp']  ?>" data-nom="<?php echo $row['noms']  ?>" 
-        data-lugn="<?php echo $row['lugn']  ?>" data-luga="<?php echo $row['luga']  ?>" >
-        <span data-feather="edit-3">
+        <div class='btn-group mr-2' role='group' aria-label='Third group'>
+        <button type='button' id='btnmodalsac' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modalmodificar' 
+        data-id=".$row['idp']." data-nom=".$row['noms']." 
+        data-lugn=".$row['lugn']." data-luga=".$row['luga']." >
+        <span data-feather='edit-3'>
         </button>
 
-        <div style=" width: 5px;"></div>
+        <div style='width: 5px;'></div>
 
-          <div class="btn-group mr-2" role="group" aria-label="Third group">
-          <button type="button" id="btneliminar" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#meliminar"
-          data-ide="<?php echo $row['idp'] ?>">
-          <span data-feather="delete">
+          <div class='btn-group mr-2' role='group' aria-label='Third group'>
+          <button type='button' id='btneliminar' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#meliminar'
+          data-ide=".$row['idp'].">
+          <span data-feather='delete'>
           </button>
 
             </div>  
           </div>    
-          </td>
-
+          </td>";
+        }
+        ?>
 
 
     </tr>

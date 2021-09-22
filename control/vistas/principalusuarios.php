@@ -8,7 +8,11 @@
          $nombre = $_SESSION['nombre'];
          $usuarioid = $_SESSION['iduser'];
         $usuariorol= $_SESSION['roluser']; 
-      
+      if($usuariorol == 2 || $usuariorol == 3){
+
+        header("location:index.php"); 
+
+      }
        /* echo $nombre;
         echo $usuarioid;
         echo $usuariorol;*/

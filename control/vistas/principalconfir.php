@@ -169,12 +169,20 @@
               Catequistas
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="principalusuarios.php">
-              <span data-feather="user"></span>
+
+          <?php
+          
+          if( $usuariorol== 1){
+            echo "
+          <li class='nav-item'>
+            <a class='nav-link' href='principalusuarios.php'>
+              <span data-feather='user'></span>
               Usuarios
             </a>
-          </li>
+          </li>";
+        }
+          ?>
+
         </ul>
       </div>
     </nav>
@@ -186,20 +194,22 @@
           <div class="col-lg-12">
 
           <h3>Confirmación</h3>
+          <?php 
+                if($usuariorol == 1 || $usuariorol == 2){
+          echo "<div class='btn-toolbar' >
 
-           <div class="btn-toolbar" >
-
-           <div class="btn-group mr-2" role="group" aria-label="Third group">
-                <a class="btn btn-primary  btn-sm" href="actconfir.php" role="button"> <span data-feather="plus"></span> Registrar Confirmación</a>
+           <div class='btn-group mr-2' role='group' aria-label='Third group'>
+                <a class='btn btn-primary  btn-sm' href='actconfir.php' role='button'> <span data-feather='plus'></span> Registrar Confirmación</a>
                 </div>
 
-                <div style="width: 3px;"></div>
+                <div style='width: 3px;'></div>
 
-                <div class="btn-group mr-2" role="group" aria-label="Third group">
-                <a class="btn btn-primary  btn-sm" href="actsupconfir.php" role="button"> <span data-feather="plus"></span> Registrar supletoria de Confirmación</a>
+                <div class='btn-group mr-2' role='group' aria-label='Third group'>
+                <a class='btn btn-primary  btn-sm' href='actsupconfir.php' role='button'> <span data-feather='plus'></span> Registrar supletoria de Confirmación</a>
                 </div>
-           </div>    
-           
+           </div> ";   
+          }
+          ?>
      <hr>
      <br>
         <table id="formato" class="table table-striped "  style="width:100%">
@@ -216,7 +226,12 @@
                 
                 
               
-                <th scope="col">Acciones</th>
+                  
+                <?php 
+                if($usuariorol == 1 || $usuariorol == 2){
+               echo "<th scope='col'>Acciones</th>";
+              }
+              ?>
               </tr>
             </thead>
             <tbody>
@@ -276,39 +291,41 @@
                          
                         
                           
-                
-                <td> 
+                          <?php 
+                if($usuariorol == 1 || $usuariorol == 2){
+               echo" <td> 
                
 
-                <div class="btn-group mr-2" role="group" aria-label="Third group">
+                <div class='btn-group mr-2' role='group' aria-label'Third group'>
                         
-                  <button type="button" id="btndoc" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#documento" 
-                  data-idrb="<?php echo $row['idreg'] ?>"  >
-                  <span data-feather="file">
+                  <button type='button' id='btndoc' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#documento' 
+                  data-idrb=".$row['idreg']."  >
+                  <span data-feather='file'>
                   </button>
                
-                        <div style=" width: 5px;"></div>
+                        <div style='width: 5px;'></div>
 
                  
-                        <button type="button" id="btnedit" class="btn btn-warning btn-sm" data-toggle="modal" 
-                  data-ided="<?php echo $row['idreg'] ?>" data-suple="<?php echo $row['supletoria'] ?>"
-                  data-libro="<?php echo $row['noLibro'] ?>" data-folio="<?php echo $row['noFolio'] ?>"
-                  data-nsuple="<?php echo $row['noSupletoria'] ?>" data-edad="<?php echo $row['edadSacramento'] ?>"
-                  data-testi="<?php echo $row['testimonioPersona'] ?>" >
-                  <span data-feather="edit-3">
+                        <button type='button' id='btnedit' class='btn btn-warning btn-sm' data-toggle='modal' 
+                  data-ided=".$row['idreg']." data-suple=".$row['supletoria']."
+                  data-libro=".$row['noLibro']." data-folio=".$row['noFolio']."
+                  data-nsuple=".$row['noSupletoria']." data-edad=".$row['edadSacramento']."
+                  data-testi=".$row['testimonioPersona']." >
+                  <span data-feather='edit-3'>
                   </button>
 
-                  <div style=" width: 5px;"></div>
+                  <div style='width: 5px;'></div>
 
-                  <button type="button" id="btndel" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminar" 
-                        data-idreg="<?php echo $row['idreg'] ?>">
-                        <span data-feather="delete">
+                  <button type='button' id='btndel' class='btn btn-danger btn-sm' data-toggle='modal' data-target'#eliminar' 
+                        data-idreg=".$row['idreg'].">
+                        <span data-feather='delete'>
                         </button>
 
                       </div>  
                     
-                    </td>
-
+                    </td>";
+                  }
+                  ?>
 
 
               </tr>
