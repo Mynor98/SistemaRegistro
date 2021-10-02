@@ -13,7 +13,7 @@
             alert('Error, Seleccionar un genero.'); 
             window.location.href='../vistas/principalpadres.php'; 
             </script>"; 
-        }
+        }else{
 
         $sqlcon = "INSERT INTO datospersona (nombre, genero)
                         VALUES ('$nombre','$genero')";
@@ -34,11 +34,7 @@
                     alert('Padre registrado con exito.'); 
                     window.location.href='../vistas/principalpadres.php'; 
                     </script>"; 
-            }
-            
-        
-        
-        } else {
+            } else {
 
             echo "<script> 
             alert('Error, padre no ingresado. Revisar datos ingresados.'); 
@@ -47,8 +43,6 @@
             
         }   
 
-
-
     }else {
         echo "<script> 
                 alert('Error al insertar, Colocar nombre y genero del padre.'); 
@@ -56,7 +50,16 @@
                 </script>"; 
 
     }
+}
     
+}else{
+
+    echo "<script> 
+    alert('Error al insertar, Colocar nombre del padre.'); 
+    window.location.href='../vistas/principalpadres.php'; 
+    </script>"; 
+
+}
 
 
 
